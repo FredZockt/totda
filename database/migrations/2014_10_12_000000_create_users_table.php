@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('current_city_id')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->timestamp('work_started_at')->nullable();
+            $table->timestamp('work_finished_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -18,11 +18,13 @@ class KingdomController extends Controller
         $kingdom = auth()->user()->kingdom()->first();
         $cities = $kingdom->cities()->get();
 
-        foreach($cities as $index => $city) {
-            $city->distanceToInKm = $city->calculateDistance(auth()->user()->current_city_id, $city->id);
-            $city->distanceToInSeconds = $city->calculateWalktime($city->distanceToInKm);
-            $city->distanceToAsReadable = $city->getReadableWalktime($city->distanceToInSeconds);
-            $city->distanceToAsDate = Carbon::now()->addSeconds($city->distanceToInSeconds)->toDateTimeString();
+        if(!auth()->user()->job_id) {
+            foreach($cities as $index => $city) {
+                $city->distanceToInKm = $city->calculateDistance(auth()->user()->current_city_id, $city->id);
+                $city->distanceToInSeconds = $city->calculateWalktime($city->distanceToInKm);
+                $city->distanceToAsReadable = $city->getReadableWalktime($city->distanceToInSeconds);
+                $city->distanceToAsDate = Carbon::now()->addSeconds($city->distanceToInSeconds)->toDateTimeString();
+            }
         }
 
         return view('kingdom.index', [

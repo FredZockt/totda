@@ -25,14 +25,16 @@
                             <p class="price text-{{ $item->price < $item->base_price * 0.8 ? 'warning' : ($item->price > $item->base_price * 1.19 ? 'success' : 'normal') }}">Price: {{ $item->price }}</p>
                         </div>
                         <div class="item-action">
-                            <form action="{{ route('inventory.delete', $item->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="Delete"/>
-                            </form>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sellModal{{$index}}">
                                 Sell
                             </button>
+                            <form action="{{ route('inventory.delete', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
                         </div>
                         <div class="modal fade" id="sellModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{$index}}" aria-hidden="true">
                             <div class="modal-dialog" role="document">

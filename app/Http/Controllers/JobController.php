@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use Carbon\Carbon;
 
 class JobController extends Controller
 {
@@ -24,8 +25,13 @@ class JobController extends Controller
             ]);
         }
 
-        if(!$user->job_id && $city && $current_city) {
-
+        if($city && $current_city && $city != $current_city) {
+            $distanceInSeconds = $city->calculateWalktime($city->calculateDistance($current_city->id, $city->id));
+            $user->job_id = 1;
+            $user->current_city_id = $city->id;
+            $user->work_finished_at = Carbon::now()->addSeconds($distanceInSeconds);
+            $user->save();
+            return redirect()->back();
         } else {
             return redirect('/home');
         }

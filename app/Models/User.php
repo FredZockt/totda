@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'gold',
-        'work_started_at',
+        'work_finished_at',
         'job_id',
         'kingdom',
         'current_city_id'
