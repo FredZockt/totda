@@ -14,6 +14,11 @@ class Kingdom extends Model
 
     public function cities()
     {
-        return $this->hasMany(City::class);
+        return $this->hasMany(City::class, 'kingdom_id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'kingdom_id');
     }
 }

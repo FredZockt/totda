@@ -19,16 +19,19 @@ class InventoryController extends Controller
     public function index()
     {
         // get the authenticated user's ID
-        $user_id = auth()->user()->id;
+        $user = auth()->user();
 
         // left join the slots table with the goods table
         $slots = DB::table('inventories')
             ->leftJoin('goods', 'inventories.good_id', '=', 'goods.id')
-            ->leftJoin('economy', 'inventories.good_id', '=', 'economy.good_id')
+            ->leftJoin('economy', function($join) use ($user) {
+                $join->on('economy.good_id', '=', 'goods.id')
+                    ->where('economy.kingdom_id', '=', $user->currentCity()->first()->kingdom_id);
+            })
             ->select('inventories.*', 'goods.name as good_name', 'goods.max_stack as max_stack',
                 DB::raw("IFNULL(economy.price, goods.price) as price"),
                 DB::raw("goods.price as base_price"))
-            ->where('user_id', $user_id)
+            ->where('user_id', $user->id)
             ->get();
 
         return view('inventory.index', compact('slots'));
@@ -86,7 +89,7 @@ class InventoryController extends Controller
 
         $user = Auth::user();
 
-        $city = City::find($user->current_city);
+        $city = $user->currentCity()->first();
 
         $tax = ($price * $quantity) * $city->tax_rate;
 
@@ -98,7 +101,7 @@ class InventoryController extends Controller
         $kingdom->save();
 
         // update economy
-        $good->handleSell($item->good_id, $quantity);
+        $good->handleSell($item->good_id, $kingdom->id, $quantity);
 
         return redirect()->back()->with([
             'status' => 'Item sold successfully for: ' . ($price * $quantity) - $tax . '! Tax: ' . $tax,

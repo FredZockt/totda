@@ -25,7 +25,7 @@ class User extends Authenticatable
         'work_started_at',
         'job_id',
         'kingdom',
-        'current_city'
+        'current_city_id'
     ];
 
     /**
@@ -50,5 +50,10 @@ class User extends Authenticatable
     public function kingdom()
     {
         return $this->belongsTo(Kingdom::class);
+    }
+
+    public function currentCity()
+    {
+        return $this->belongsTo(City::class);
     }
 }

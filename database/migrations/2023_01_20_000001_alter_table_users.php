@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('kingdom_id')->references('id')->on('kingdoms');
+            $table->foreign('current_city_id')->references('id')->on('cities');
         });
     }
 
