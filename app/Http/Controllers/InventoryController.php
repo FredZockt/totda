@@ -93,7 +93,9 @@ class InventoryController extends Controller
         $user->gold += ($price * $quantity) - $tax;
         $user->save();
 
-        DB::table('kingdoms')->where('id', $city->kingdom_id)->increment('gold', $tax);
+        $kingdom = $city->kingdom()->first();
+        $kingdom->gold += $tax;
+        $kingdom->save();
 
         // update economy
         $good->handleSell($item->good_id, $quantity);

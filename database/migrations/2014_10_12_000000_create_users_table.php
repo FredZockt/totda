@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('gold')->default(0);
             $table->unsignedBigInteger('job_id')->nullable();
-            $table->unsignedBigInteger('kingdom')->nullable();
+            $table->unsignedBigInteger('kingdom_id')->nullable();
             $table->unsignedBigInteger('current_city')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
