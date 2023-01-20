@@ -11,6 +11,7 @@ class City extends Model
 
     public $distanceToInKm = 0;
     public $distanceToInSeconds = 0;
+    public $distanceToAsReadable;
     public $distanceToAsDate;
 
     public function kingdom()
@@ -33,5 +34,27 @@ class City extends Model
     {
         // (km * 10 minutes per km) * 60 seconds = time to walk in seconds
         return ($kilometers * 10) * 60;
+    }
+    
+    public function getReadableWalktime($seconds)
+    {
+        $suffix = ':';
+        $days = floor(($seconds / (24*60*60)));
+        $hours = ($seconds / (60*60)) % 24;
+        $minutes = ($seconds / 60) % 60;
+        $seconds = ($seconds / 1) % 60;
+
+        if($days > 0)
+        {
+            $days =  $days < 10 ? '0' . $days . " d, " : $days ." d, ";
+        } else {
+            $days = '';
+        }
+
+        $hours = $hours < 10 ? '0' . $hours . $suffix : $hours . $suffix;
+        $minutes = $minutes < 10 ? '0' . $minutes . $suffix : $minutes . $suffix;
+        $seconds = $seconds < 10 ? '0' . $seconds : $seconds;
+
+        return $days . $hours . $minutes . $seconds;
     }
 }
