@@ -7,6 +7,7 @@ use App\Http\Controllers\HighscoreController as HighscoreController;
 use App\Http\Controllers\InventoryController as InventoryController;
 use App\Http\Controllers\JobController as JobController;
 use App\Http\Controllers\MapController as MapController;
+use App\Http\Controllers\CityController as CityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/', function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'job'])->group(function () {
-    Route::get('/city', [HomeController::class, 'index'])->name('home');
+    Route::get('/city', [CityController::class, 'index'])->name('city.index');
 
     Route::get('/map', [MapController::class, 'index'])->name('map.index');
 
