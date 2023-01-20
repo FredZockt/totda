@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     protected $table = 'inventories';
-    protected $fillable = ['user_id', 'item_id', 'quantity', 'type'];
+    protected $fillable = ['user_id', 'good_id', 'quantity', 'type'];
     public $MAX_SLOTS = 32;
     public $MAX_STACK = 100;
 
@@ -16,17 +16,14 @@ class Inventory extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addItem($user_id, $item_id, $quantity, $type)
+    public static function addItem($user_id, $good_id, $quantity, $type, $max_stack)
     {
-        $existing_item = $this->where('user_id', $user_id)
-            ->where('item_id', $item_id)
-            ->where('type', $type)
+        $existing_item = Inventory::where('user_id', $user_id)
+            ->where('good_id', $good_id)
             ->first();
 
         if($existing_item) {
-            if($type == 'good') {
-                $max_stack = $this->MAX_STACK;
-            } else {
+            if($type != 'good') {
                 $max_stack = 1;
             }
 
@@ -37,24 +34,24 @@ class Inventory extends Model
                 $remaining_quantity = ($existing_item->quantity + $quantity) - $max_stack;
                 $existing_item->quantity = $max_stack;
                 $existing_item->save();
-                if(count($this->where('user_id', $user_id)->get()) < $this->MAX_SLOTS) {
-                    $this->create([
+                if(count(Inventory::where('user_id', $user_id)->get()) < 32) {
+                    Inventory::create([
                         'user_id' => $user_id,
-                        'item_id' => $item_id,
+                        'good_id' => $good_id,
                         'quantity' => $remaining_quantity,
-                        'type' => $type
+                        'max_stack' => $max_stack
                     ]);
                 } else {
                     return 'Inventory is full!';
                 }
             }
         } else {
-            if(count($this->where('user_id', $user_id)->get()) < $this->MAX_SLOTS) {
-                $this->create([
+            if(count(Inventory::where('user_id', $user_id)->get()) < 32) {
+                Inventory::create([
                     'user_id' => $user_id,
-                    'item_id' => $item_id,
+                    'good_id' => $good_id,
                     'quantity' => $quantity,
-                    'type' => $type
+                    'max_stack' => $max_stack
                 ]);
             } else {
                 return 'Inventory is full!';

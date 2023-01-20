@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('work_finished_at')->nullable();
             $table->string('password');
+            $table->integer('task')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

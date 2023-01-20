@@ -25,7 +25,8 @@ class User extends Authenticatable
         'work_finished_at',
         'job_id',
         'kingdom',
-        'current_city_id'
+        'current_city_id',
+        'task'
     ];
 
     /**

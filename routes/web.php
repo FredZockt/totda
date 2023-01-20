@@ -8,6 +8,7 @@ use App\Http\Controllers\InventoryController as InventoryController;
 use App\Http\Controllers\JobController as JobController;
 use App\Http\Controllers\MapController as MapController;
 use App\Http\Controllers\CityController as CityController;
+use App\Http\Controllers\WorkController as WorkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,15 @@ Route::middleware(['auth', 'job'])->group(function () {
 
     Route::get('/map', [MapController::class, 'index'])->name('map.index');
 
-    Route::get('/work', [HomeController::class, 'index'])->name('home');
+    Route::get('/work', function() {
+        return redirect('city')->with([
+            'status' => 'Choose a building first',
+            'status_type' => 'warning'
+        ]);
+    });
+
+    Route::get('work/{id}', [WorkController::class, 'index'])->name('work.index');
+    Route::post('work/{id}/start/{task}', [WorkController::class, 'start'])->name('work.start');
 
     Route::get('/settings', [HomeController::class, 'index'])->name('home');
 

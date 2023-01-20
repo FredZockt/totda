@@ -20,13 +20,18 @@ class JobsTableSeeder extends Seeder
 
         $job = new Job();
         $job->name = 'walking';
+        $job->task = null;
         $job->save();
 
         foreach($buildings as $index => $building) {
-            $job = new Job();
-            $job->name = strtolower(str_replace(' ', '_', $building->city()->first()->name . '_' . $building->name . '_job'));
-            $job->building_id = $building->id;
-            $job->save();
+            for($i = 1; $i <= 3; $i++) {
+                $job = new Job();
+                $job->name = strtolower(str_replace(' ', '_', $building->city()->first()->name . '_' . $building->name . '_job'));
+                $job->building_id = $building->id;
+                $job->task = $i;
+                $job->save();
+            }
+
         }
     }
 }
