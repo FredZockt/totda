@@ -24,12 +24,13 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/city', [HomeController::class, 'index'])->name('home');
-Route::get('/map', [HomeController::class, 'index'])->name('home');
-Route::get('/work', [HomeController::class, 'index'])->name('home');
-Route::get('/settings', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'job'])->group(function () {
+    Route::get('/city', [HomeController::class, 'index'])->name('home');
+    Route::get('/map', [HomeController::class, 'index'])->name('home');
+    Route::get('/work', [HomeController::class, 'index'])->name('home');
+    Route::get('/settings', [HomeController::class, 'index'])->name('home');
+
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('inventory/sell/{id}', [InventoryController::class, 'sell'])->name('inventory.sell');
     Route::delete('inventory/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');

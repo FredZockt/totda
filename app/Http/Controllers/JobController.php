@@ -31,9 +31,21 @@ class JobController extends Controller
             $user->current_city_id = $city->id;
             $user->work_finished_at = Carbon::now()->addSeconds($distanceInSeconds);
             $user->save();
-            return redirect()->back();
+
+            session()->put([
+                'active_job_headline' => 'You are walking to another city',
+                'active_job_description' => 'journey to: ' . $city->name . '. Arrival at: ' . $user->work_finished_at,
+            ]);
+
+            return redirect()->back()->with([
+                'status' => 'You start your journey to: ' . $city->name . '. Arrival at: ' . $user->work_finished_at,
+                'status_type' => 'success'
+            ]);
         } else {
-            return redirect('/home');
+            return redirect()->back()->with([
+                'status' => 'something went wrong...',
+                'status_type' => 'danger'
+            ]);
         }
     }
 }

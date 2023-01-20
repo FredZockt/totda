@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    @if (session()->has('status'))
+        <div class="alert alert-{{ session()->get('status_type') }}">
+            {{ session()->get('status') }}
+        </div>
+    @endif
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">Kingdom you belong to</div>
 
@@ -25,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 pt-4">
+            <div class="col-12 pt-4">
                 <div class="card">
                     <div class="card-header">Kingdom's cities</div>
 
@@ -75,5 +79,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

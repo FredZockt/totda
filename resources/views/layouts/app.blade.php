@@ -101,9 +101,28 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <main class="py-4">
+                        @yield('content')
+                    </main>
+                </div>
+
+                <div class="col-4">
+                    <aside class="py-4">
+                        @if(session()->get('active_job_headline') && session()->get('active_job_description'))
+                            <div class="card">
+                                <div class="card-header">{{ session()->get('active_job_headline') }}</div>
+                                <div class="card-body">
+                                    <p>{{ session()->get('active_job_description') }}</p>
+                                </div>
+                            </div>
+                        @endif
+                    </aside>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
