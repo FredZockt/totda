@@ -1,0 +1,14 @@
+.info-card {
+    border-radius: .4rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    border: 1px solid var(--colors-darker);
+    &__image {
+       
+    }
+    &__content {
+        padding: .8rem;
+
+    }
+}

@@ -6,32 +6,35 @@
         {{ session()->get('status') }}
     </div>
 @endif
-<div class="inventory-grid">
+<div class="row">
     @for ($row = 0; $row < 4; $row++)
         @for ($col = 0; $col < 8; $col++)
             @php
                 $index = $col + ($row * 8);
                 $item = $slots[$index] ?? null;
             @endphp
-            <div class="cell {{ $item ? 'occupied' : '' }}">
-                @if ($item)
-                    <div class="item">
-                        <div class="item-image">
-                            <img src="{{ $item->good_name }}.png" alt="{{ $item->good_name }}"/>
-                        </div>
-                        <div class="item-info">
-                            <p>{{ $item->good_name }}</p>
-                            <p>Quantity: {{ $item->quantity }} / {{ $item->max_stack }}</p>
-                            <p class="price text-{{ $item->price < $item->base_price * 0.8 ? 'warning' : ($item->price > $item->base_price * 1.19 ? 'success' : 'normal') }}">Price: {{ $item->price }}</p>
-                        </div>
-                        <div class="item-action">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sellModal{{$index}}">
-                                Sell
-                            </button>
-                            <form action="{{ route('inventory.delete', $item->id) }}" method="POST">
+            @if ($item)
+            <div class="col-auto">
+                <div class="info-card">
+
+                        <img class="info-card__image mb-3" src="{{asset('assets/images/'.$item->good_name.'.png')}}" alt="{{ $item->good_name }}">
+
+                        <div class="info-card__content">
+                            <h3>{{ $item->good_name }}</h3>
+
+                            <div class="row">
+                                <div class="col-6">Quantity: </div>
+                                <div class="col-6 text-end">{{ $item->quantity }} / {{ $item->max_stack }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">Price: </div>
+                                <div class="col-6 text-end price text-{{ $item->price < $item->base_price * 0.8 ? 'warning' : ($item->price > $item->base_price * 1.19 ? 'success' : 'normal') }}">{{ round($item->price, 2) }}</div>
+                            </div>
+                            <button data-toggle="modal" data-target="#sellModal{{$index}}" class="btn w-100 mb-2">Sell</button>
+                            <form action="{{ route('inventory.delete', $item->id) }}" method="POST" class="w-100">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn w-100">
                                     Delete
                                 </button>
                             </form>
@@ -61,9 +64,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endif
+                </div>
             </div>
+            @endif
+
         @endfor
     @endfor
 </div>

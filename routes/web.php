@@ -23,6 +23,10 @@ Route::get('/', function () {
     return view('/home');
 });
 
+Route::get('/styleguide', function () {
+    return view('/styleguide');
+});
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/city', [HomeController::class, 'index'])->name('home');
 Route::get('/map', [HomeController::class, 'index'])->name('home');

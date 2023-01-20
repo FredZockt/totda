@@ -7,6 +7,31 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+// Colors
+@import 'colors';
+
+// Buttons & Links
+@import 'buttons';
+@import 'links';
+
+// Infocard
+@import 'infocard';
+
+
+html {
+    background-color: var(--background-color);
+    font-size: 10px;
+}
+body {
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 1.6rem;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+}
+
 .inventory-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -28,3 +53,10 @@
 .occupied {
     background-color: #fff;
 }
+
+
+.header-image {
+    width: 100%;
+    object-fit: cover;
+}
+
