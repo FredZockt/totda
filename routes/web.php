@@ -6,6 +6,8 @@ use App\Http\Controllers\KingdomController as KingdomController;
 use App\Http\Controllers\HighscoreController as HighscoreController;
 use App\Http\Controllers\InventoryController as InventoryController;
 use App\Http\Controllers\JobController as JobController;
+use App\Http\Controllers\MapController as MapController;
+use App\Http\Controllers\CityController as CityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +30,16 @@ Route::get('/styleguide', function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/city', [HomeController::class, 'index'])->name('home');
-Route::get('/map', [HomeController::class, 'index'])->name('home');
-Route::get('/work', [HomeController::class, 'index'])->name('home');
-Route::get('/settings', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'job'])->group(function () {
+    Route::get('/city', [CityController::class, 'index'])->name('city.index');
+
+    Route::get('/map', [MapController::class, 'index'])->name('map.index');
+
+    Route::get('/work', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/settings', [HomeController::class, 'index'])->name('home');
+
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('inventory/sell/{id}', [InventoryController::class, 'sell'])->name('inventory.sell');
     Route::delete('inventory/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');

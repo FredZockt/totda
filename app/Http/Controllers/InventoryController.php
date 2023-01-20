@@ -54,6 +54,14 @@ class InventoryController extends Controller
 
     public function sell(Request $request, $id)
     {
+        // is user walking?
+        if(auth()->user()->job_id && auth()->user()->job_id == 1) {
+            return redirect()->back()->with([
+                'status' => 'You are currently walking. Therefore you cannot sell anything.',
+                'status_type' => 'danger'
+            ]);
+        }
+
         $item = Inventory::find($id);
         if (!$item) {
             return redirect()->back()->with([
