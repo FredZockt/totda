@@ -39,6 +39,7 @@
                                     <th>Distance</th>
                                     <th>Duration</th>
                                     <th>Arrival</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,16 @@
                                         <td>{{ $city->id == auth()->user()->current_city_id ? '-' : number_format($city->distanceToInKm, 2) }}</td>
                                         <td>{{ $city->id == auth()->user()->current_city_id ? '-' : $city->distanceToAsReadable }}</td>
                                         <td>{{ $city->id == auth()->user()->current_city_id ? '-' : $city->distanceToAsDate }}</td>
+                                        @if($city->id != auth()->user()->current_city_id && !auth()->user()->job_id)
+                                            <td>
+                                                <form method="POST" action="/walk/{{$city->id}}">
+                                                    @csrf
+                                                    <input type="submit" value="visit" class="btn btn-primary">
+                                                </form>
+                                            </td>
+                                        @else
+                                            <td>-</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

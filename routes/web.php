@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\KingdomController as KingdomController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController as HomeController;
+use App\Http\Controllers\KingdomController as KingdomController;
 use App\Http\Controllers\HighscoreController as HighscoreController;
 use App\Http\Controllers\InventoryController as InventoryController;
+use App\Http\Controllers\JobController as JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +23,11 @@ Route::get('/', function () {
     return view('/home');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/city', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/map', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/work', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/settings', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/city', [HomeController::class, 'index'])->name('home');
+Route::get('/map', [HomeController::class, 'index'])->name('home');
+Route::get('/work', [HomeController::class, 'index'])->name('home');
+Route::get('/settings', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
@@ -34,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/kingdom', [KingdomController::class, 'index'])->name('kingdom.index');
 
+    Route::post('walk/{id}', [JobController::class, 'walk'])->name('job.walk');
 
     Route::get('/highscore', [HighscoreController::class, 'index']);
 });
