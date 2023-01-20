@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('kingdom_id')->references('id')->on('kingdoms');
-            $table->foreign('job_id')->references('id')->on('jobs');
-            $table->foreign('current_city_id')->references('id')->on('cities');
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('building_id')->nullable();
+            $table->timestamps();
+
+            $table->foreign('building_id')->references('id')->on('buildings');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('jobs');
     }
 };
