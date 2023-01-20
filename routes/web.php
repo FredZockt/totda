@@ -6,6 +6,7 @@ use App\Http\Controllers\KingdomController as KingdomController;
 use App\Http\Controllers\HighscoreController as HighscoreController;
 use App\Http\Controllers\InventoryController as InventoryController;
 use App\Http\Controllers\JobController as JobController;
+use App\Http\Controllers\MapController as MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'job'])->group(function () {
     Route::get('/city', [HomeController::class, 'index'])->name('home');
-    Route::get('/map', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/map', [MapController::class, 'index'])->name('map.index');
+
     Route::get('/work', [HomeController::class, 'index'])->name('home');
+
     Route::get('/settings', [HomeController::class, 'index'])->name('home');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
