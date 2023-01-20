@@ -19,7 +19,6 @@ return new class extends Migration
             $table->double('price');
             $table->integer('quantity');
             $table->integer('max_stack');
-            $table->integer('stock')->default(0);
             $table->timestamps();
         });
     }

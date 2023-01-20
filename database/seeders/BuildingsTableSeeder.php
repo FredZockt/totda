@@ -27,7 +27,5 @@ class BuildingsTableSeeder extends Seeder
                 $building->save();
             }
         }
-
-
     }
 }

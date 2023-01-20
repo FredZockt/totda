@@ -17,9 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('good_id');
             $table->double('price');
-            $table->integer('quantity');
-            $table->double('exp_base');
-            $table->double('exp_rate');
+            $table->integer('quantity')->default(0);
             $table->timestamps();
 
             $table->foreign('good_id')->references('id')->on('goods');

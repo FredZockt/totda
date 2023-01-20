@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HighscoreController as HighscoreController;
+use App\Http\Controllers\InventoryController as InventoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +22,16 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/city', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/inventory', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/map', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/work', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/kingdom', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/settings', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/highscore', [\App\Http\Controllers\HighscoreController::class, 'index']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::post('inventory/sell/{id}', [InventoryController::class, 'sell'])->name('inventory.sell');
+    Route::delete('inventory/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
+
+    Route::get('/highscore', [HighscoreController::class, 'index']);
+});
+

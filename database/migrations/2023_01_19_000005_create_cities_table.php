@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('kingdom');
+            $table->unsignedBigInteger('kingdom_id');
             $table->double('tax_rate');
             $table->integer('x');
             $table->integer('y');
             $table->timestamps();
+
+            $table->foreign('kingdom_id')->references('id')->on('kingdoms');
         });
     }
 

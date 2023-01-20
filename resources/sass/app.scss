@@ -6,3 +6,25 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 5px;
+}
+
+.cell {
+    background-color: #eee;
+    padding: 10px;
+}
+
+.cell.occupied .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.occupied {
+    background-color: #fff;
+}
