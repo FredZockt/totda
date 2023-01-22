@@ -10,5 +10,15 @@ class Kingdom extends Model
     use HasFactory;
 
     protected $table = 'kingdoms';
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'gold'];
+
+    public function cities()
+    {
+        return $this->hasMany(City::class, 'kingdom_id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'kingdom_id');
+    }
 }

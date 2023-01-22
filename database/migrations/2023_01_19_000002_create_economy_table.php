@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('economy', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('good_id');
+            $table->unsignedBigInteger('kingdom_id');
             $table->double('price');
-            $table->integer('quantity');
-            $table->double('exp_base');
-            $table->double('exp_rate');
+            $table->integer('quantity')->default(0);
             $table->timestamps();
 
             $table->foreign('good_id')->references('id')->on('goods');
+            $table->foreign('kingdom_id')->references('id')->on('kingdoms');
         });
     }
 

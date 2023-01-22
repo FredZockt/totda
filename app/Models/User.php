@@ -22,10 +22,11 @@ class User extends Authenticatable
         'email',
         'password',
         'gold',
-        'work_started_at',
+        'work_finished_at',
         'job_id',
         'kingdom',
-        'current_city'
+        'current_city_id',
+        'task'
     ];
 
     /**
@@ -46,4 +47,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function kingdom()
+    {
+        return $this->belongsTo(Kingdom::class);
+    }
+
+    public function currentCity()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 }

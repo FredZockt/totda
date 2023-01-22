@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@if (session()->has('status'))
-    <div class="alert alert-{{ session()->get('status_type') }}">
-        {{ session()->get('status') }}
-    </div>
-@endif
 <div class="row justify-content-center">
     <div class="col-12">
         <div class="card">

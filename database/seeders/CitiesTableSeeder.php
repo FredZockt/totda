@@ -9,8 +9,6 @@ class CitiesTableSeeder extends Seeder
 {
     public function run()
     {
-        $kingdomA = "Kingdom A";
-        $kingdomB = "Kingdom B";
         $x = 1;
         $y = 1;
         $max_x = 100;
@@ -18,7 +16,7 @@ class CitiesTableSeeder extends Seeder
         for ($i = 0; $i < 20; $i++) {
             $city = new City();
             $city->name = "City " . ($i + 1);
-            $city->kingdom = $kingdomA;
+            $city->kingdom_id = 1;
             $city->tax_rate = rand(5, 20) / 100;
             $city->x = $x;
             $city->y = $y;
@@ -50,7 +48,7 @@ class CitiesTableSeeder extends Seeder
         for ($i = 20; $i < 40; $i++) {
             $city = new City();
             $city->name = "City " . ($i + 1);
-            $city->kingdom = $kingdomB;
+            $city->kingdom_id = 2;
             $city->tax_rate = rand(5, 20) / 100;
             $city->x = $x;
             $city->y = $y;

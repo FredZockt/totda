@@ -17,10 +17,12 @@ class KingdomsTableSeeder extends Seeder
     {
         $kingdomA = new Kingdom();
         $kingdomA->name = 'Kingdom A';
+        $kingdomA->gold = 1000;
         $kingdomA->save();
 
         $kingdomB = new Kingdom();
         $kingdomB->name = 'Kingdom B';
+        $kingdomB->gold = 1000;
         $kingdomB->save();
     }
 }

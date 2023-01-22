@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('goods', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('price');
-            $table->integer('quantity');
-            $table->integer('max_stack');
+            $table->unsignedBigInteger('kingdom_id');
+            $table->double('tax_rate');
+            $table->integer('x');
+            $table->integer('y');
             $table->timestamps();
+
+            $table->foreign('kingdom_id')->references('id')->on('kingdoms');
         });
     }
 
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goods');
+        Schema::dropIfExists('cities');
     }
 };

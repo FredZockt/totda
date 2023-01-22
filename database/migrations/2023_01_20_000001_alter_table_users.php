@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('kingdom');
-            $table->double('tax_rate');
-            $table->integer('x');
-            $table->integer('y');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('kingdom_id')->references('id')->on('kingdoms');
+            $table->foreign('job_id')->references('id')->on('jobs');
+            $table->foreign('current_city_id')->references('id')->on('cities');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        //
     }
 };

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('good_id');
             $table->integer('quantity');
-            $table->integer('max_slots');
+            $table->integer('max_stack');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
