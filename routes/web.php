@@ -9,6 +9,7 @@ use App\Http\Controllers\JobController as JobController;
 use App\Http\Controllers\MapController as MapController;
 use App\Http\Controllers\CityController as CityController;
 use App\Http\Controllers\WorkController as WorkController;
+use App\Http\Controllers\SearchController as SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +56,8 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::post('walk/{id}', [JobController::class, 'walk'])->name('job.walk');
 
     Route::get('/highscore', [HighscoreController::class, 'index']);
+
+    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+    Route::post('/search/do', [SearchController::class, 'search']);
 });
 

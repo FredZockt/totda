@@ -78,6 +78,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/highscore">Highscore</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/search">Search</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -115,7 +118,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">{{ session()->get('sidebar_city_headline') }}</div>
                                 <div class="card-body">
-                                    <p>{{ session()->get('sidebar_city_content') }}</p>
+                                    <p class="mb-0">{{ session()->get('sidebar_city_content') }}</p>
                                 </div>
                             </div>
                         @endif
@@ -123,7 +126,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">{{ session()->get('sidebar_gold_headline') }}</div>
                                 <div class="card-body">
-                                    <p>{{ session()->get('sidebar_gold_content') }}</p>
+                                    <p class="mb-0">{{ session()->get('sidebar_gold_content') }}</p>
                                 </div>
                             </div>
                         @endif
@@ -131,7 +134,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">{{ session()->get('sidebar_inventory_headline') }}</div>
                                 <div class="card-body">
-                                    <p>{{ session()->get('sidebar_inventory_content') }}</p>
+                                    <p class="mb-0">{{ session()->get('sidebar_inventory_content') }}</p>
                                 </div>
                             </div>
                         @endif
@@ -139,7 +142,7 @@
                             <div class="card mb-4">
                                 <div class="card-header">{{ session()->get('active_job_headline') }}</div>
                                 <div class="card-body">
-                                    <p>{{ session()->get('active_job_description') }}</p>
+                                    <p class="mb-0">{{ session()->get('active_job_description') }}</p>
                                 </div>
                             </div>
                         @endif
