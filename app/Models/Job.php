@@ -28,7 +28,8 @@ class Job extends Model
             switch ($user->task) {
                 case 1:
                     // short work
-                    $amount = round(rand(10, 20) / $good->price);
+                    //$amount = round(rand(1000, 2000) / $good->price);
+                    $amount = 572;
                     break;
                 case 2:
                     // mid work

@@ -16,46 +16,72 @@ class Inventory extends Model
         return $this->belongsTo(User::class);
     }
 
+    //$user->id, $good->id, $amount, 'good', $good->max_stack
     public static function addItem($user_id, $good_id, $quantity, $type, $max_stack)
     {
-        $existing_item = Inventory::where('user_id', $user_id)
-            ->where('good_id', $good_id)
-            ->first();
+        $slot = Inventory::where('good_id', $good_id)->where('quantity', '<', $max_stack)->first();
+        $totalSlots = Inventory::where('user_id', $user_id)->get()->count();
 
-        if($existing_item) {
-            if($type != 'good') {
-                $max_stack = 1;
-            }
-
-            if(($existing_item->quantity + $quantity) <= $max_stack) {
-                $existing_item->quantity += $quantity;
-                $existing_item->save();
-            } else {
-                $remaining_quantity = ($existing_item->quantity + $quantity) - $max_stack;
-                $existing_item->quantity = $max_stack;
-                $existing_item->save();
-                if(count(Inventory::where('user_id', $user_id)->get()) < 32) {
-                    Inventory::create([
+        if ($slot) {
+            if ($quantity + $slot->quantity > $max_stack) {
+                $remainingQuantity = $quantity + $slot->quantity - $max_stack;
+                $slot->update(['quantity' => $max_stack]);
+                while ($remainingQuantity > 0 && $totalSlots < 32) {
+                    $newSlot = Inventory::create([
                         'user_id' => $user_id,
                         'good_id' => $good_id,
-                        'quantity' => $remaining_quantity,
-                        'max_stack' => $max_stack
+                        'quantity' => 0,
+                        'max_Stack' => $max_stack
                     ]);
-                } else {
-                    return 'Inventory is full!';
+                    $totalSlots++;
+                    if ($remainingQuantity > $max_stack) {
+                        $newSlot->update(['quantity' => $max_stack]);
+                        $remainingQuantity -= $max_stack;
+                    } else {
+                        $newSlot->update(['quantity' => $remainingQuantity]);
+                        $remainingQuantity = 0;
+                    }
                 }
+            } else {
+                $slot->update(['quantity' => $slot->quantity + $quantity]);
             }
         } else {
-            if(count(Inventory::where('user_id', $user_id)->get()) < 32) {
+            if ($quantity > $max_stack) {
+                $remainingQuantity = $quantity - $max_stack;
                 Inventory::create([
                     'user_id' => $user_id,
                     'good_id' => $good_id,
-                    'quantity' => $quantity,
-                    'max_stack' => $max_stack
+                    'quantity' => $max_stack,
+                    'max_Stack' => $max_stack
                 ]);
+                $totalSlots++;
+                while ($remainingQuantity > 0 && $totalSlots < 32) {
+                    $newSlot = Inventory::create([
+                        'user_id' => $user_id,
+                        'good_id' => $good_id,
+                        'quantity' => 0,
+                        'max_Stack' => $max_stack
+                    ]);
+                    $totalSlots++;
+                    if ($remainingQuantity > $max_stack) {
+                        $newSlot->update(['quantity' => $max_stack]);
+                        $remainingQuantity -= $max_stack;
+                    } else {
+                        $newSlot->update(['quantity' => $remainingQuantity]);
+                        $remainingQuantity = 0;
+                    }
+                }
             } else {
-                return 'Inventory is full!';
+                if($totalSlots < 32) {
+                    Inventory::create([
+                        'user_id' => $user_id,
+                        'good_id' => $good_id,
+                        'quantity' => 0,
+                        'max_Stack' => $max_stack
+                    ]);
+                }
             }
         }
     }
+
 }
