@@ -10,6 +10,7 @@ use App\Http\Controllers\MapController as MapController;
 use App\Http\Controllers\CityController as CityController;
 use App\Http\Controllers\WorkController as WorkController;
 use App\Http\Controllers\SearchController as SearchController;
+use App\Http\Controllers\MarketController as MarketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,5 +60,8 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
 
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     Route::post('/search/do', [SearchController::class, 'search']);
+
+    Route::get('/market', [MarketController::class, 'index'])->name('market.index');
+    Route::post('/market/buy/{id}', [MarketController::class, 'buy'])->name('market.buy');
 });
 

@@ -49,41 +49,44 @@ class Inventory extends Model
             }
         }
 
-        if ($quantity > $max_stack) {
-            $remainingQuantity = $quantity - $max_stack;
-            Inventory::create([
-                'user_id' => $user_id,
-                'good_id' => $good_id,
-                'quantity' => $max_stack,
-                'max_stack' => $max_stack
-            ]);
-            $totalSlots++;
-            while ($remainingQuantity > 0 && $totalSlots < 32) {
-                $newSlot = Inventory::create([
-                    'user_id' => $user_id,
-                    'good_id' => $good_id,
-                    'quantity' => 0,
-                    'max_stack' => $max_stack
-                ]);
-                $totalSlots++;
-                if ($remainingQuantity > $max_stack) {
-                    $newSlot->update(['quantity' => $max_stack]);
-                    $remainingQuantity -= $max_stack;
-                } else {
-                    $newSlot->update(['quantity' => $remainingQuantity]);
-                    $remainingQuantity = 0;
-                }
-            }
-        } else {
-            if($totalSlots < 32) {
+        if($quantity > 0) {
+            if ($quantity > $max_stack) {
+                $remainingQuantity = $quantity - $max_stack;
                 Inventory::create([
                     'user_id' => $user_id,
                     'good_id' => $good_id,
-                    'quantity' => $quantity,
+                    'quantity' => $max_stack,
                     'max_stack' => $max_stack
                 ]);
+                $totalSlots++;
+                while ($remainingQuantity > 0 && $totalSlots < 32) {
+                    $newSlot = Inventory::create([
+                        'user_id' => $user_id,
+                        'good_id' => $good_id,
+                        'quantity' => 0,
+                        'max_stack' => $max_stack
+                    ]);
+                    $totalSlots++;
+                    if ($remainingQuantity > $max_stack) {
+                        $newSlot->update(['quantity' => $max_stack]);
+                        $remainingQuantity -= $max_stack;
+                    } else {
+                        $newSlot->update(['quantity' => $remainingQuantity]);
+                        $remainingQuantity = 0;
+                    }
+                }
+            } else {
+                if($totalSlots < 32) {
+                    Inventory::create([
+                        'user_id' => $user_id,
+                        'good_id' => $good_id,
+                        'quantity' => $quantity,
+                        'max_stack' => $max_stack
+                    ]);
+                }
             }
         }
+
     }
 
 }

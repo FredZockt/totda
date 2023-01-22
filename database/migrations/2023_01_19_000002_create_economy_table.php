@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('good_id');
             $table->unsignedBigInteger('kingdom_id');
-            $table->double('price');
+            $table->decimal('price', 14, 6)->default(0);
             $table->integer('quantity')->default(0);
             $table->timestamps();
 

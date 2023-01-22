@@ -61,6 +61,9 @@
                                 <a class="nav-link" href="/city">City</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/market">Market</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/inventory">Inventory</a>
                             </li>
                             <li class="nav-item">

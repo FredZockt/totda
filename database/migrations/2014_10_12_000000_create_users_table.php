@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('gold')->default(0);
+            $table->decimal('gold', 14, 6)->default(0);
             $table->unsignedBigInteger('job_id')->nullable();
             $table->unsignedBigInteger('kingdom_id')->nullable();
             $table->unsignedBigInteger('current_city_id')->nullable();
