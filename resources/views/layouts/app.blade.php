@@ -111,8 +111,32 @@
 
                 <div class="col-4">
                     <aside class="py-4">
+                        @if(session()->get('sidebar_city_headline') && session()->get('sidebar_city_content'))
+                            <div class="card mb-4">
+                                <div class="card-header">{{ session()->get('sidebar_city_headline') }}</div>
+                                <div class="card-body">
+                                    <p>{{ session()->get('sidebar_city_content') }}</p>
+                                </div>
+                            </div>
+                        @endif
+                        @if(session()->get('sidebar_gold_headline') && session()->get('sidebar_gold_content'))
+                            <div class="card mb-4">
+                                <div class="card-header">{{ session()->get('sidebar_gold_headline') }}</div>
+                                <div class="card-body">
+                                    <p>{{ session()->get('sidebar_gold_content') }}</p>
+                                </div>
+                            </div>
+                        @endif
+                        @if(session()->get('sidebar_inventory_headline') && session()->get('sidebar_inventory_content'))
+                            <div class="card mb-4">
+                                <div class="card-header">{{ session()->get('sidebar_inventory_headline') }}</div>
+                                <div class="card-body">
+                                    <p>{{ session()->get('sidebar_inventory_content') }}</p>
+                                </div>
+                            </div>
+                        @endif
                         @if(session()->get('active_job_headline') && session()->get('active_job_description'))
-                            <div class="card">
+                            <div class="card mb-4">
                                 <div class="card-header">{{ session()->get('active_job_headline') }}</div>
                                 <div class="card-body">
                                     <p>{{ session()->get('active_job_description') }}</p>

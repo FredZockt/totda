@@ -76,7 +76,7 @@ class Inventory extends Model
                     Inventory::create([
                         'user_id' => $user_id,
                         'good_id' => $good_id,
-                        'quantity' => 0,
+                        'quantity' => $quantity,
                         'max_Stack' => $max_stack
                     ]);
                 }

@@ -20,6 +20,9 @@ class Economy extends Model
         if($goods->quantity >= $quantity) {
             $goods->quantity += $quantity;
             $goods->price = $this->base_price * exp(-$quantity/$goods->quantity);
+            if($goods->price < 0.01) {
+                $goods->price = 0.01;
+            }
             $goods->save();
         }
     }

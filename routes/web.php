@@ -23,12 +23,13 @@ use App\Http\Controllers\WorkController as WorkController;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('/home');
+    return view('/welcome');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'job'])->group(function () {
+Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/city', [CityController::class, 'index'])->name('city.index');
 
     Route::get('/map', [MapController::class, 'index'])->name('map.index');
