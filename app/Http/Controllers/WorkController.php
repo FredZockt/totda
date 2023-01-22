@@ -76,7 +76,7 @@ class WorkController extends Controller
             // insert into users table
             $user->job_id = $job->id;
             $user->task = $job->task;
-            $user->work_finished_at = Carbon::now()->addSeconds(1);
+            $user->work_finished_at = Carbon::now()->addSeconds($job_time);
             $user->save();
 
             session()->put([
