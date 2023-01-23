@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('gold', 14, 6)->default(0);
+            $table->unsignedBigInteger('king_id')->nullable();
             $table->timestamps();
         });
     }

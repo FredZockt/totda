@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('kingdom_id');
+            $table->unsignedBigInteger('mayor_id')->nullable();
             $table->decimal('tax_rate',4,2)->default(0.15);
             $table->integer('x');
             $table->integer('y');

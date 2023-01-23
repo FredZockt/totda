@@ -17,12 +17,18 @@
                                 <tr>
                                     <th>name</th>
                                     <th>current gold</th>
+                                    <th>King / Queen</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>{{ $kingdom->name }}</td>
                                     <td>{{ $kingdom->gold }}</td>
+                                    @if($king)
+                                        <td>{{ $king->name }}</td>
+                                        @else
+                                        <td>-</td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>

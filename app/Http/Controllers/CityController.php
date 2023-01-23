@@ -22,6 +22,7 @@ class CityController extends Controller
         ]);
         $workFlag = !!$user->job_id;
         $walkFlag = false;
+        $mayor = $city->mayor()->first();
 
         if($user->job_id == 1) {
             $walkFlag = true;
@@ -37,7 +38,8 @@ class CityController extends Controller
             'buildings' => $buildings,
             'city' => $city,
             'workFlag' => $workFlag,
-            'walkFlag' => $walkFlag
+            'walkFlag' => $walkFlag,
+            'mayor' => $mayor
         ]);
     }
 }

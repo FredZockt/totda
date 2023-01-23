@@ -19,6 +19,11 @@ class City extends Model
         return $this->belongsTo(Kingdom::class);
     }
 
+    public function mayor()
+    {
+        return $this->belongsTo(User::class, 'mayor_id');
+    }
+
     public function calculateDistance($sourceCityId, $targetCityId)
     {
         $city1 = City::where('id', $sourceCityId)->first();

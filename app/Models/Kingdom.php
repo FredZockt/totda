@@ -10,7 +10,7 @@ class Kingdom extends Model
     use HasFactory;
 
     protected $table = 'kingdoms';
-    protected $fillable = ['name', 'gold'];
+    protected $fillable = ['name', 'gold', 'king_id'];
 
     public function cities()
     {
@@ -20,5 +20,10 @@ class Kingdom extends Model
     public function users()
     {
         return $this->hasMany(User::class, 'kingdom_id');
+    }
+
+    public function king()
+    {
+        return $this->belongsTo(User::class, 'king_id');
     }
 }

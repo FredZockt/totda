@@ -17,6 +17,7 @@ class KingdomController extends Controller
     {
         $kingdom = auth()->user()->kingdom()->first();
         $cities = $kingdom->cities()->get();
+        $king = $kingdom->king()->first();
 
         if(!auth()->user()->job_id) {
             foreach($cities as $index => $city) {
@@ -29,7 +30,8 @@ class KingdomController extends Controller
 
         return view('kingdom.index', [
             'kingdom' => $kingdom,
-            'cities' => $cities
+            'cities' => $cities,
+            'king' => $king
         ]);
     }
 }

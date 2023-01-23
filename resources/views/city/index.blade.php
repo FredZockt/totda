@@ -9,7 +9,33 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Welcome to {{$city->name}}</div>
+                <div class="card-header">Welcome to {{ $city->name }}</div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>current tax rate</th>
+                            <th>Mayor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{$city->name}}</td>
+                            <td>{{ $city->tax_rate }}</td>
+                            @if($mayor)
+                                <td>{{ $mayor->name }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">Buildings to work in</div>
 
                 <div class="card-body">
                     @if($walkFlag)
