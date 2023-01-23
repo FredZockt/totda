@@ -17,11 +17,13 @@ class Economy extends Model
         $goods = $this->where('good_id', $good_id)->where('kingdom_id', $kingdom_id)->first();
         $this->base_price = $goods->price;
 
-        if($goods->quantity >= $quantity) {
-            $goods->quantity += $quantity;
-            $goods->price = $this->base_price * exp(-$quantity/$goods->quantity);
-            $goods->save();
+        $goods->quantity += $quantity;
+        $goods->price = $this->base_price * exp(-($quantity/1000)/($goods->quantity || 1));
+        $goods->price = floor($goods->price * pow(10, 6)) / pow(10, 6);
+        if($goods->price < 0.000001) {
+            $goods->price = 0.000001;
         }
+        $goods->save();
     }
 
     // this method handles the buy of a user from economy
@@ -29,8 +31,16 @@ class Economy extends Model
     {
         $goods = $this->where('good_id', $good_id)->where('kingdom_id', $kingdom_id)->first();
         $this->base_price = $goods->price;
-        $goods->quantity -= $quantity;
-        $goods->price = $this->base_price * exp($quantity/$goods->quantity);
-        $goods->save();
+
+        if($goods->quantity >= $quantity) {
+            $goods->quantity -= $quantity;
+            $goods->price = $this->base_price * exp(($quantity/1000)/($goods->quantity || 1));
+            $goods->save();
+        }
+    }
+
+    public function good()
+    {
+        return $this->belongsTo(Good::class);
     }
 }

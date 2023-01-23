@@ -53,35 +53,48 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
-                                @endif
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/home">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/city">City</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/inventory">Inventory</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/map">Map</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/work">Work</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/kingdom">Kingdom</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/settings">Settings</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/highscore">Highscore</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
+                            @endif
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="/home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/city">City</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/market">Market</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/inventory">Inventory</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/map">Map</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/work">Work</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/kingdom">Kingdom</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/settings">Settings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/highscore">Highscore</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/search">Search</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -115,11 +128,35 @@
 
                 <div class="col-4">
                     <aside class="py-4">
+                        @if(session()->get('sidebar_city_headline') && session()->get('sidebar_city_content'))
+                            <div class="card mb-4">
+                                <div class="card-header">{{ session()->get('sidebar_city_headline') }}</div>
+                                <div class="card-body">
+                                    <p class="mb-0">{{ session()->get('sidebar_city_content') }}</p>
+                                </div>
+                            </div>
+                        @endif
+                        @if(session()->get('sidebar_gold_headline') && session()->get('sidebar_gold_content'))
+                            <div class="card mb-4">
+                                <div class="card-header">{{ session()->get('sidebar_gold_headline') }}</div>
+                                <div class="card-body">
+                                    <p class="mb-0">{{ session()->get('sidebar_gold_content') }}</p>
+                                </div>
+                            </div>
+                        @endif
+                        @if(session()->get('sidebar_inventory_headline') && session()->get('sidebar_inventory_content'))
+                            <div class="card mb-4">
+                                <div class="card-header">{{ session()->get('sidebar_inventory_headline') }}</div>
+                                <div class="card-body">
+                                    <p class="mb-0">{{ session()->get('sidebar_inventory_content') }}</p>
+                                </div>
+                            </div>
+                        @endif
                         @if(session()->get('active_job_headline') && session()->get('active_job_description'))
-                            <div class="card">
+                            <div class="card mb-4">
                                 <div class="card-header">{{ session()->get('active_job_headline') }}</div>
                                 <div class="card-body">
-                                    <p>{{ session()->get('active_job_description') }}</p>
+                                    <p class="mb-0">{{ session()->get('active_job_description') }}</p>
                                 </div>
                             </div>
                         @endif

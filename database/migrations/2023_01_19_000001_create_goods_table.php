@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('goods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('price');
-            $table->integer('quantity');
-            $table->integer('max_stack');
+            $table->decimal('price', 14, 6)->default(0);
+            $table->integer('quantity')->default(0);
+            $table->integer('max_stack')->default(0);
             $table->timestamps();
         });
     }

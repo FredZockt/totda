@@ -8,6 +8,9 @@ use App\Http\Controllers\InventoryController as InventoryController;
 use App\Http\Controllers\JobController as JobController;
 use App\Http\Controllers\MapController as MapController;
 use App\Http\Controllers\CityController as CityController;
+use App\Http\Controllers\WorkController as WorkController;
+use App\Http\Controllers\SearchController as SearchController;
+use App\Http\Controllers\MarketController as MarketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +25,7 @@ use App\Http\Controllers\CityController as CityController;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('/home');
+    return view('/welcome');
 });
 
 Route::get('/styleguide', function () {
@@ -31,12 +34,22 @@ Route::get('/styleguide', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'job'])->group(function () {
+Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/city', [CityController::class, 'index'])->name('city.index');
 
     Route::get('/map', [MapController::class, 'index'])->name('map.index');
 
-    Route::get('/work', [HomeController::class, 'index'])->name('home');
+    Route::get('/work', function() {
+        return redirect('city')->with([
+            'status' => 'Choose a building first',
+            'status_type' => 'warning'
+        ]);
+    });
+
+    Route::get('work/{id}', [WorkController::class, 'index'])->name('work.index');
+    Route::post('work/{id}/start/{task}', [WorkController::class, 'start'])->name('work.start');
 
     Route::get('/settings', [HomeController::class, 'index'])->name('home');
 
@@ -49,5 +62,11 @@ Route::middleware(['auth', 'job'])->group(function () {
     Route::post('walk/{id}', [JobController::class, 'walk'])->name('job.walk');
 
     Route::get('/highscore', [HighscoreController::class, 'index']);
+
+    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+    Route::post('/search/do', [SearchController::class, 'search']);
+
+    Route::get('/market', [MarketController::class, 'index'])->name('market.index');
+    Route::post('/market/buy/{id}', [MarketController::class, 'buy'])->name('market.buy');
 });
 

@@ -13,4 +13,9 @@ class Building extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function good()
+    {
+        return $this->belongsTo(Good::class);
+    }
 }
