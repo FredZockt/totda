@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,7 +14,7 @@ class GenerateHighscore extends Command
      *
      * @var string
      */
-    protected $signature = 'highscore:generate';
+    protected $signature = 'generate:highscore';
 
     /**
      * The console command description.

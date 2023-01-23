@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Building;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CityController extends Controller
 {
@@ -23,6 +25,14 @@ class CityController extends Controller
         $workFlag = !!$user->job_id;
         $walkFlag = false;
         $mayor = $city->mayor()->first();
+        $application = DB::table('mayor_application')->where('user_id', $user->id)->first();
+        $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
+
+        if($vacancy) {
+            if(Carbon::createFromTimeString($vacancy->open_until)->timestamp <=  Carbon::now()->timestamp) {
+                $vacancy = null;
+            }
+        }
 
         if($user->job_id == 1) {
             $walkFlag = true;
@@ -39,7 +49,81 @@ class CityController extends Controller
             'city' => $city,
             'workFlag' => $workFlag,
             'walkFlag' => $walkFlag,
-            'mayor' => $mayor
+            'mayor' => $mayor,
+            'user' => $user,
+            'application' => $application,
+            'vacancy' => $vacancy
+        ]);
+    }
+
+    public function apply()
+    {
+        $user = auth()->user()->first();
+        $city = $user->currentCity()->first();
+        $kingdom = $city->kingdom()->first();
+        $application = DB::table('mayor_application');
+
+        if($user->kingdom_id != $city->kingdom_id) {
+            return redirect()->back()->with([
+                'status' => 'You cannot apply here.',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        if($application->where('user_id', $user->id)->first() != null) {
+            return redirect()->back()->with([
+                'status' => 'You already applied as mayor.',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        if($user->gold > 500) {
+            // user has to pay a fee
+            $user->gold -= 500;
+            $user->save();
+
+            // kingdom gets the fee
+            $kingdom->gold += 500;
+            $kingdom->save();
+
+            // save applicant
+            $application->insert([
+                'user_id' => $user->id,
+                'city_id' => $city->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+
+        } else {
+            return redirect()->back()->with([
+                'status' => 'You need 500 gold to apply',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'status' => 'You successfully applied as mayor!',
+            'status_type' => 'success'
+        ]);
+    }
+
+    public function cancel()
+    {
+        $user = auth()->user()->first();
+        $city = $user->currentCity()->first();
+        $application = DB::table('mayor_application')->where('user_id', $user->id)->where('city_id', $city->id);
+
+        if($application->first() == null) {
+            return redirect()->back()->with([
+                'status' => 'There is nothing to withdraw.',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $application->delete();
+        return redirect()->back()->with([
+            'status' => 'Application withdrawn.',
+            'status_type' => 'warning'
         ]);
     }
 }

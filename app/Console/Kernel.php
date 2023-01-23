@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('generate:highscore')->dailyAt('4:00');
+        $schedule->command('generate:vacancies')->twiceDailyAt(0, 12);
+        $schedule->command('generate:voting_results')->twiceDailyAt(0, 12);
     }
 
     /**

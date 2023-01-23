@@ -26,12 +26,78 @@
                                     <td>{{ $kingdom->gold }}</td>
                                     @if($king)
                                         <td>{{ $king->name }}</td>
+                                    @else
+                                        @if(!$vacancy)
+                                            <td>-</td>
                                         @else
-                                        <td>-</td>
+                                            @if($kingdom->id == $user->kingdom_id)
+                                                <td>
+                                                    @if($application)
+                                                        <form action="{{ route('kingdom.apply.cancel') }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-primary">withdraw</button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('kingdom.apply') }}" method="POST">
+                                                            @csrf
+                                                            <button {{ $user->gold < 5000 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn btn-primary">apply</button>
+                                                            @if(count($applicants) > 0)
+                                                                or
+                                                                <button type="button" data-toggle="modal" data-target="#voteModal" class="btn btn-primary">vote</button>
+                                                            @endif
+                                                        </form>
+                                                    @endif
+                                                    <p>Application can send until {{ $vacancy->open_until }}</p>
+                                                </td>
+                                            @else
+                                                <td>-</td>
+                                            @endif
+                                        @endif
                                     @endif
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Vote for a new monarch</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Votes</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($applicants as $index => $applicant)
+                                            <tr>
+                                                <td>{{ $applicant->name }}</td>
+                                                <td>{{ $applicant->votings }}</td>
+                                                <td>
+                                                    <form action="{{ route('kingdom.vote', $applicant->user_id) }}" method="POST">
+                                                        @csrf
+                                                        <input type="submit" value="vote" class="btn btn-primary">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

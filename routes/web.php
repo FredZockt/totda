@@ -38,6 +38,8 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/city', [CityController::class, 'index'])->name('city.index');
+    Route::post('/city/apply', [CityController::class, 'apply'])->name('city.apply');
+    Route::post('/city/apply/cancel', [CityController::class, 'cancel'])->name('city.apply.cancel');
 
     Route::get('/map', [MapController::class, 'index'])->name('map.index');
 
@@ -58,6 +60,9 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::delete('inventory/{id}', [InventoryController::class, 'delete'])->name('inventory.delete');
 
     Route::get('/kingdom', [KingdomController::class, 'index'])->name('kingdom.index');
+    Route::post('/kingdom/apply', [KingdomController::class, 'apply'])->name('kingdom.apply');
+    Route::post('/kingdom/vote/{applicant_id}', [KingdomController::class, 'vote'])->name('kingdom.vote');
+    Route::post('/kingdom/apply/cancel', [KingdomController::class, 'cancel'])->name('kingdom.apply.cancel');
 
     Route::post('walk/{id}', [JobController::class, 'walk'])->name('job.walk');
 

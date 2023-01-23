@@ -22,19 +22,40 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>{{$city->name}}</td>
+                            <td>{{ $city->name }}</td>
                             <td>{{ $city->tax_rate }}</td>
                             @if($mayor)
                                 <td>{{ $mayor->name }}</td>
                             @else
-                                <td>-</td>
+                                @if(!$vacancy)
+                                    <td>-</td>
+                                @else
+                                    @if($city->kingdom_id == $user->kingdom_id)
+                                    <td>
+                                        @if($application && $city->id == $application->city_id)
+                                            <form action="{{ route('city.apply.cancel') }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary">withdraw</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('city.apply') }}" method="POST">
+                                                @csrf
+                                                <button {{ $user->gold < 500 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn btn-primary">apply</button>
+                                            </form>
+                                        @endif
+                                        <span>Application can send until {{ $vacancy->open_until }}</span>
+                                    </td>
+                                    @else
+                                        <td>-</td>
+                                    @endif
+                                @endif
                             @endif
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card mb-4">
+            <div class="card mt-4">
                 <div class="card-header">Buildings to work in</div>
 
                 <div class="card-body">
