@@ -85,7 +85,11 @@ class InventoryController extends Controller
             ]);
         }
 
-        $good = Economy::find($item->good_id);
+        $user = Auth::user();
+        $city = $user->currentCity()->first();
+        $kingdom = $city->kingdom()->first();
+
+        $good = Economy::where('good_id', $item->good_id)->where('kingdom_id', $kingdom->id)->first();
         $price = $good->price;
 
         $item->quantity -= $quantity;
@@ -95,16 +99,11 @@ class InventoryController extends Controller
             $item->save();
         }
 
-        $user = Auth::user();
-
-        $city = $user->currentCity()->first();
-
         $tax = ($price * $quantity) * $city->tax_rate;
 
         $user->gold += ($price * $quantity) - $tax;
         $user->save();
 
-        $kingdom = $city->kingdom()->first();
         $kingdom->gold += $tax;
         $kingdom->save();
 

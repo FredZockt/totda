@@ -20,7 +20,7 @@
                     <div data-x="{{$x}}" data-y="{{$y}}" style="width:5px;height:5px;background-color: #2d3748;float:left;">
                         @foreach($cities as $index => $city)
                             @if($city->x == $x && $city->y == $y)
-                                <span data-toggle="modal" data-target="#cityModal{{$index}}" data-x="{{$city->x}}" data-y="{{$city->y}}" style="cursor: pointer;display: block; height:5px; width: 5px; background-color: red;"></span>
+                                <span data-toggle="modal" data-target="#cityModal{{$index}}" data-x="{{$city->x}}" data-y="{{$city->y}}" style="cursor: pointer;display: block; height:5px; width: 5px; background-color: {{$city->kingdom_id == 1 ? 'red' : 'blue'}};"></span>
                                 <div class="modal fade" id="cityModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{$index}}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">

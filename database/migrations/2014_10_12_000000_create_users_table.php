@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('gold')->default(0);
+            $table->decimal('gold', 14, 6)->default(0);
             $table->unsignedBigInteger('job_id')->nullable();
             $table->unsignedBigInteger('kingdom_id')->nullable();
             $table->unsignedBigInteger('current_city_id')->nullable();
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('work_finished_at')->nullable();
             $table->string('password');
+            $table->integer('task')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
