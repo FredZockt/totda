@@ -24,8 +24,8 @@ class CityController extends Controller
         ]);
         $workFlag = !!$user->job_id;
         $walkFlag = false;
-        $mayor = $city->mayor()->first();
-        $application = DB::table('mayor_application')->where('user_id', $user->id)->first();
+        $governor = $city->governor()->first();
+        $application = DB::table('governor_application')->where('user_id', $user->id)->first();
         $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
 
         if($vacancy) {
@@ -49,7 +49,7 @@ class CityController extends Controller
             'city' => $city,
             'workFlag' => $workFlag,
             'walkFlag' => $walkFlag,
-            'mayor' => $mayor,
+            'governor' => $governor,
             'user' => $user,
             'application' => $application,
             'vacancy' => $vacancy
@@ -61,7 +61,7 @@ class CityController extends Controller
         $user = auth()->user()->first();
         $city = $user->currentCity()->first();
         $kingdom = $city->kingdom()->first();
-        $application = DB::table('mayor_application');
+        $application = DB::table('governor_application');
 
         if($user->kingdom_id != $city->kingdom_id) {
             return redirect()->back()->with([
@@ -72,7 +72,7 @@ class CityController extends Controller
 
         if($application->where('user_id', $user->id)->first() != null) {
             return redirect()->back()->with([
-                'status' => 'You already applied as mayor.',
+                'status' => 'You already applied as governor.',
                 'status_type' => 'danger'
             ]);
         }
@@ -102,7 +102,7 @@ class CityController extends Controller
         }
 
         return redirect()->back()->with([
-            'status' => 'You successfully applied as mayor!',
+            'status' => 'You successfully applied as governor!',
             'status_type' => 'success'
         ]);
     }
@@ -111,7 +111,7 @@ class CityController extends Controller
     {
         $user = auth()->user()->first();
         $city = $user->currentCity()->first();
-        $application = DB::table('mayor_application')->where('user_id', $user->id)->where('city_id', $city->id);
+        $application = DB::table('governor_application')->where('user_id', $user->id)->where('city_id', $city->id);
 
         if($application->first() == null) {
             return redirect()->back()->with([

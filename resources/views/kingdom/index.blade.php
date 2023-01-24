@@ -25,7 +25,16 @@
                                     <td>{{ $kingdom->name }}</td>
                                     <td>{{ $kingdom->gold }}</td>
                                     @if($king)
-                                        <td>{{ $king->name }}</td>
+                                        @if($king->id == $user->id)
+                                            <td>
+                                                <form action="{{ route('kingdom.abdicate') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary">abdicate</button>
+                                                </form>
+                                            </td>
+                                        @else
+                                            <td>{{ $king->name }}</td>
+                                        @endif
                                     @else
                                         @if(!$vacancy)
                                             <td>-</td>

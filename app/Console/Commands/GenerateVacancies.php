@@ -22,7 +22,7 @@ class GenerateVacancies extends Command
      *
      * @var string
      */
-    protected $description = 'Generates vacancies, so users can apply as mayor or even as king';
+    protected $description = 'Generates vacancies, so users can apply as governor or even as king';
 
     /**
      * Execute the console command.
@@ -35,7 +35,7 @@ class GenerateVacancies extends Command
         $kingdoms = Kingdom::all();
 
         foreach($cities as $city) {
-            if(!$city->mayor_id) {
+            if(!$city->governor_id) {
                 if(!DB::table('vacancies')->where('city_id', $city->id)->where('kingdom_id', $city->kingdom_id)->first()) {
                     DB::table('vacancies')->insert([
                         'city_id' => $city->id,

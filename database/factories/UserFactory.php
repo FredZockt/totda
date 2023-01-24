@@ -20,7 +20,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'gold' => rand(10, 199),
+            'gold' => rand(1000, 2000),
             'email_verified_at' => now(),
             'kingdom_id' => rand(1,2),
             'current_city_id' => rand(1,20),

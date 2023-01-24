@@ -86,8 +86,8 @@ class MarketController extends Controller
             $user->save();
         }
 
-        $kingdom->gold += $tax;
-        $kingdom->save();
+        $city->gold += $tax;
+        $city->save();
 
         // update economy
         $good->handleBuy($good->good_id, $kingdom->id, $quantity);

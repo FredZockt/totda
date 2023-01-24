@@ -17,15 +17,15 @@
                         <tr>
                             <th>name</th>
                             <th>current tax rate</th>
-                            <th>Mayor</th>
+                            <th>governor</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>{{ $city->name }}</td>
                             <td>{{ $city->tax_rate }}</td>
-                            @if($mayor)
-                                <td>{{ $mayor->name }}</td>
+                            @if($governor)
+                                <td>{{ $governor->name }}</td>
                             @else
                                 @if(!$vacancy)
                                     <td>-</td>

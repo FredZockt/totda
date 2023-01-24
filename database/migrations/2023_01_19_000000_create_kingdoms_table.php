@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kingdoms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('gold', 14, 6)->default(0);
+            $table->decimal('gold', 14, 6)->default(10000);
             $table->unsignedBigInteger('king_id')->nullable();
             $table->timestamps();
         });

@@ -61,6 +61,7 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
 
     Route::get('/kingdom', [KingdomController::class, 'index'])->name('kingdom.index');
     Route::post('/kingdom/apply', [KingdomController::class, 'apply'])->name('kingdom.apply');
+    Route::post('/kingdom/abdicate', [KingdomController::class, 'abdicate'])->name('kingdom.abdicate');
     Route::post('/kingdom/vote/{applicant_id}', [KingdomController::class, 'vote'])->name('kingdom.vote');
     Route::post('/kingdom/apply/cancel', [KingdomController::class, 'cancel'])->name('kingdom.apply.cancel');
 

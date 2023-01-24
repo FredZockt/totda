@@ -156,4 +156,17 @@ class KingdomController extends Controller
         }
 
     }
+
+    public function abdicate()
+    {
+        $user = auth()->user()->first();
+        $kingdom = $user->kingdom()->first();
+        $kingdom->king_id = null;
+        $kingdom->save();
+
+        return redirect()->back()->with([
+            'status' => 'You have abdicated',
+            'status_type' => 'success'
+        ]);
+    }
 }

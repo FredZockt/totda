@@ -22,7 +22,7 @@ class GenerateVotingResults extends Command
      *
      * @var string
      */
-    protected $description = 'Generates vacancies, so users can apply as mayor or even as king';
+    protected $description = 'Generates vacancies, so users can apply as governor or even as king';
 
     /**
      * Execute the console command.

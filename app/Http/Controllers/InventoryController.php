@@ -104,8 +104,8 @@ class InventoryController extends Controller
         $user->gold += ($price * $quantity) - $tax;
         $user->save();
 
-        $kingdom->gold += $tax;
-        $kingdom->save();
+        $city->gold += $tax;
+        $city->save();
 
         // update economy
         $good->handleSell($item->good_id, $kingdom->id, $quantity);

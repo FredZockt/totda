@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('generate:highscore')->dailyAt('4:00');
         $schedule->command('generate:vacancies')->twiceDailyAt(0, 12);
         $schedule->command('generate:voting_results')->twiceDailyAt(0, 12);
+        $schedule->command('kingdom:pay_taxes')->dailyAt('0:00');
     }
 
     /**

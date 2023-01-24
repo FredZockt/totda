@@ -19,9 +19,9 @@ class City extends Model
         return $this->belongsTo(Kingdom::class);
     }
 
-    public function mayor()
+    public function governor()
     {
-        return $this->belongsTo(User::class, 'mayor_id');
+        return $this->belongsTo(User::class, 'governor_id');
     }
 
     public function calculateDistance($sourceCityId, $targetCityId)
