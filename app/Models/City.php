@@ -62,4 +62,11 @@ class City extends Model
 
         return $days . $hours . $minutes . $seconds;
     }
+
+    public static function saveMany($instances)
+    {
+        foreach ($instances as $instance) {
+            $instance->save();
+        }
+    }
 }

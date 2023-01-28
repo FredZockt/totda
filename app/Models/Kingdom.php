@@ -26,4 +26,11 @@ class Kingdom extends Model
     {
         return $this->belongsTo(User::class, 'king_id');
     }
+
+    public static function saveMany($instances)
+    {
+        foreach ($instances as $instance) {
+            $instance->save();
+        }
+    }
 }

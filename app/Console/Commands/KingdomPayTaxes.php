@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\City;
 use App\Models\Kingdom;
 use Illuminate\Console\Command;
 
@@ -29,27 +30,19 @@ class KingdomPayTaxes extends Command
     public function handle()
     {
         $kingdoms = Kingdom::all();
-        $kingdom_cities = [];
-
-        foreach($kingdoms as $kingdom) {
-            $kingdom_cities[$kingdom->id] = $kingdom->cities()->get();
-        }
-
-        foreach($kingdoms as $kingdom) {
+        foreach ($kingdoms as $kingdom) {
             $tax = 0;
-            foreach($kingdom_cities as $cities) {
-                foreach($cities as $city) {
-                    if($city->kingdom_id == $kingdom->id) {
-                        $city_tax = round($city->gold / 100 * $city->tax_rate_kingdom, 6);
-                        $tax += $city_tax;
-                        $city->gold -= $city_tax;
-                        $city->save();
-                    }
-                }
+            $cities = $kingdom->cities()->get();
+            foreach ($cities as $city) {
+                $city_tax = round($city->gold / 100 * $city->tax_rate_kingdom, 6);
+                $tax += $city_tax;
+                $city->gold -= $city_tax;
             }
             $kingdom->gold += $tax;
-            $kingdom->save();
+            City::saveMany($cities);
         }
+        // Save the changes to the database after all the calculations are done
+        Kingdom::saveMany($kingdoms);
 
         return Command::SUCCESS;
     }
