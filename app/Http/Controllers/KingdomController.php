@@ -19,6 +19,7 @@ class KingdomController extends Controller
         $kingdom = auth()->user()->kingdom()->first();
         $cities = $kingdom->cities()->get();
         $king = $kingdom->king()->first();
+        $governor_applicants = null;
         $application = DB::table('king_application')->where('user_id', $user->id)->first();
         $applicants = DB::table('king_application')
             ->leftJoin('users', 'users.id', '=', 'king_application.user_id')
@@ -26,6 +27,15 @@ class KingdomController extends Controller
             ->select('king_application.*', 'users.*')
             ->get();
         $vacancy = DB::table('vacancies')->where('kingdom_id', $kingdom->id)->where('city_id', null)->first();
+
+        if($user->id == $kingdom->king_id) {
+            foreach($cities as $city) {
+                $governor_applicants[$city->id] = DB::table('governor_application')
+                    ->leftJoin('users', 'users.id', '=', 'governor_application.user_id')
+                    ->where('city_id', $city->id)
+                    ->get();
+            }
+        }
 
         foreach($applicants as $applicant) {
             $applicant->votings = DB::table('king_voting')->where('kings_applicant_id', $applicant->user_id)->count();
@@ -53,7 +63,8 @@ class KingdomController extends Controller
             'user' => $user,
             'application' => $application,
             'vacancy' => $vacancy,
-            'applicants' => $applicants
+            'applicants' => $applicants,
+            'governor_applicants' => $governor_applicants
         ]);
     }
 

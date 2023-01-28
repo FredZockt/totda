@@ -44,6 +44,11 @@ class GenerateVacancies extends Command
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ]);
+                } else {
+                    DB::table('vacancies')->where('city_id', $city->id)->where('kingdom_id', $city->kingdom_id)->update([
+                        'open_until' => Carbon::now()->addDays(2),
+                        'updated_at' => Carbon::now()
+                    ]);
                 }
             } else {
                 if(DB::table('vacancies')->where('city_id', $city->id)->where('kingdom_id', $city->kingdom_id)->first()) {
@@ -60,6 +65,11 @@ class GenerateVacancies extends Command
                         'kingdom_id' => $kingdom->id,
                         'open_until' => Carbon::now()->addDays(2),
                         'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ]);
+                } else {
+                    DB::table('vacancies')->where('city_id', null)->where('kingdom_id', $kingdom->id)->update([
+                        'open_until' => Carbon::now()->addDays(2),
                         'updated_at' => Carbon::now()
                     ]);
                 }

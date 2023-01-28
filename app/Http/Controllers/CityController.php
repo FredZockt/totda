@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Building;
+use App\Models\City;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -126,4 +127,100 @@ class CityController extends Controller
             'status_type' => 'warning'
         ]);
     }
+
+    public function depose($city_id)
+    {
+        $city = City::find($city_id);
+        $kingdom = $city->kingdom()->first();
+
+        if($kingdom->king_id != auth()->user()->id) {
+            return redirect()->back()->with([
+                'status' => 'Not allowed.',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $city->governor_id = null;
+        $city->save();
+
+        return redirect()->back()->with([
+            'status' => 'You deposed the governor of ' . $city->name,
+            'status_type' => 'success'
+        ]);
+    }
+
+    public function appoint($city_id, $user_id)
+    {
+        $city = City::find($city_id);
+        $kingdom = $city->kingdom()->first();
+
+        if($kingdom->king_id != auth()->user()->id) {
+            return redirect()->back()->with([
+                'status' => 'Not allowed.',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $city->governor_id = $user_id;
+        $city->save();
+
+        DB::table('governor_application')->where('city_id', $city_id)->delete();
+
+        return redirect()->back()->with([
+            'status' => 'You appointed the governor of ' . $city->name,
+            'status_type' => 'success'
+        ]);
+    }
+
+    public function tax(Request $request)
+    {
+        $rate = $request->input('rate');
+        $user = auth()->user()->first();
+        $city = $user->currentCity()->first();
+
+        if($user->id != $city->governor()->first()->id) {
+            return redirect()->back()->with([
+                'status' => 'Not allowed.',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        if($rate < 0.01 || $rate > 5.00) {
+            return redirect()->back()->with([
+                'status' => 'Not allowed value',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $city->tax_rate = $rate;
+        $city->save();
+
+        return redirect()->back()->with([
+            'status' => 'Tax rate adjusted',
+            'status_type' => 'success'
+        ]);
+    }
+
+    public function abdicate()
+    {
+        $user = auth()->user()->first();
+        $city = City::where('governor_id', $user->id)->first();
+
+        if(!$city) {
+            return redirect()->back()->with([
+                'status' => 'You are no governor',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $city->governor_id = null;
+        $city->save();
+
+        return redirect()->back()->with([
+            'status' => 'You have abdicated',
+            'status_type' => 'success'
+        ]);
+    }
+
+
 }

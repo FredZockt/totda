@@ -23,9 +23,34 @@
                         <tbody>
                         <tr>
                             <td>{{ $city->name }}</td>
-                            <td>{{ $city->tax_rate }}</td>
                             @if($governor)
-                                <td>{{ $governor->name }}</td>
+                                @if($governor->id == $user->id)
+                                    <td>
+                                        <form action="/city/apply/tax" method="POST">
+                                            @csrf
+                                            <div class="form-group">
+                                                <input type="number" step="0.01" class="w-25 form-control d-inline-block" id="rate" name="rate" min="0.01" max="5.00" required value="{{$city->tax_rate}}">
+                                                <button type="submit" class="btn btn-primary">save</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    @else
+                                    <td>{{ $city->tax_rate }}</td>
+                                @endif
+                                @else
+                                <td>{{ $city->tax_rate }}</td>
+                            @endif
+                            @if($governor)
+                                @if($governor->id == $user->id)
+                                    <td>
+                                        <form action="{{ route('city.abdicate') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">abdicate</button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td>{{ $governor->name }}</td>
+                                @endif
                             @else
                                 @if(!$vacancy)
                                     <td>-</td>

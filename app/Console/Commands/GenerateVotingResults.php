@@ -45,9 +45,12 @@ class GenerateVotingResults extends Command
             }
 
             $newKing = $applicants->sortByDesc('votings')->first();
-            Kingdom::where('id', $voting->kingdom_id)->update([
-                'king_id' => $newKing->user_id
-            ]);
+            if($newKing) {
+                Kingdom::where('id', $voting->kingdom_id)->update([
+                    'king_id' => $newKing->user_id
+                ]);
+            }
+
 
             foreach($applicants as $index => $applicant) {
                 DB::table('king_voting')->where('kings_applicant_id', $applicant->user_id)->delete();

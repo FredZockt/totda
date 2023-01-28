@@ -72,7 +72,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Vote for a new monarch</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -115,7 +115,7 @@
                     <div class="card-header">Kingdom's cities</div>
 
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -144,10 +144,79 @@
                                         @endif
                                         @if($city->id != auth()->user()->current_city_id && !auth()->user()->job_id)
                                             <td>
-                                                <form method="POST" action="/walk/{{$city->id}}">
+                                                <form method="POST" action="/walk/{{$city->id}}" class="d-inline">
                                                     @csrf
-                                                    <input type="submit" value="visit" class="btn btn-primary">
+                                                    <button type="submit" class="btn btn-primary">visit</button>
                                                 </form>
+                                                @if($king && $user->id == $king->id)
+                                                    <button type="button" data-toggle="modal" data-target="#manageModal{{$index}}" class="btn btn-primary">manage</button>
+                                                    <div class="modal fade" id="manageModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="manageModalLabel{{$index}}" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="manageModalLabel{{$index}}">Manage {{$city->name}}</h5>
+                                                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    @if($city->governor()->first())
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>Rank</th>
+                                                                                <th>Name</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <td>Governor</td>
+                                                                                <td>{{$city->governor()->first()->name}}</td>
+                                                                                <td>
+                                                                                    <form method="POST" action="/city/depose/{{$city->id}}" class="d-inline">
+                                                                                        @csrf
+                                                                                        <button type="submit" class="btn btn-primary">depose</button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        @else
+                                                                        @if($governor_applicants[$city->id]->count() > 0)
+                                                                            <table class="table table-hover table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Applicant</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                @foreach($governor_applicants[$city->id] as $applicant)
+                                                                                    <tr>
+                                                                                        <td>{{$applicant->name}}</td>
+                                                                                        <td>
+                                                                                            <form method="POST" action="/city/appoint/{{$city->id}}/{{$applicant->user_id}}" class="d-inline">
+                                                                                                @csrf
+                                                                                                <button type="submit" class="btn btn-primary">appoint</button>
+                                                                                            </form>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                            @else
+                                                                            <p>No applications yet...</p>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </td>
                                         @else
                                             <td>-</td>
