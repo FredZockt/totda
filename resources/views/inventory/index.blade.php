@@ -44,7 +44,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel{{$index}}">Sell {{ $item->good_name }}</h5>
-                                    <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -57,8 +57,8 @@
                                     </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <input type="submit" value="Sell" class="btn btn-primary">
+                                        <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                        <input type="submit" value="Sell" class="btn">
                                     </div>
                                 </form>
                             </div>

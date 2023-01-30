@@ -29,7 +29,7 @@
                                             <td>
                                                 <form action="{{ route('kingdom.abdicate') }}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-primary">abdicate</button>
+                                                    <button type="submit" class="btn">abdicate</button>
                                                 </form>
                                             </td>
                                         @else
@@ -44,15 +44,15 @@
                                                     @if($application)
                                                         <form action="{{ route('kingdom.apply.cancel') }}" method="POST">
                                                             @csrf
-                                                            <button type="submit" class="btn btn-primary">withdraw</button>
+                                                            <button type="submit" class="btn">withdraw</button>
                                                         </form>
                                                     @else
                                                         <form action="{{ route('kingdom.apply') }}" method="POST">
                                                             @csrf
-                                                            <button {{ $user->gold < 5000 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn btn-primary">apply</button>
+                                                            <button {{ $user->gold < 5000 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn">apply</button>
                                                             @if(count($applicants) > 0)
                                                                 or
-                                                                <button type="button" data-toggle="modal" data-target="#voteModal" class="btn btn-primary">vote</button>
+                                                                <button type="button" data-toggle="modal" data-target="#voteModal" class="btn">vote</button>
                                                             @endif
                                                         </form>
                                                     @endif
@@ -72,7 +72,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Vote for a new monarch</h5>
-                                    <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -93,7 +93,7 @@
                                                 <td>
                                                     <form action="{{ route('kingdom.vote', $applicant->user_id) }}" method="POST">
                                                         @csrf
-                                                        <input type="submit" value="vote" class="btn btn-primary">
+                                                        <input type="submit" value="vote" class="btn">
                                                     </form>
                                                 </td>
                                             </tr>
@@ -103,7 +103,7 @@
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -146,10 +146,10 @@
                                             <td>
                                                 <form method="POST" action="/walk/{{$city->id}}" class="d-inline">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-primary">visit</button>
+                                                    <button type="submit" class="btn">visit</button>
                                                 </form>
                                                 @if($king && $user->id == $king->id)
-                                                    <button type="button" data-toggle="modal" data-target="#manageModal{{$index}}" class="btn btn-primary">manage</button>
+                                                    <button type="button" data-toggle="modal" data-target="#manageModal{{$index}}" class="btn">manage</button>
                                                     <div class="modal fade" id="manageModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="manageModalLabel{{$index}}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
@@ -176,7 +176,7 @@
                                                                                 <td>
                                                                                     <form method="POST" action="/city/depose/{{$city->id}}" class="d-inline">
                                                                                         @csrf
-                                                                                        <button type="submit" class="btn btn-primary">depose</button>
+                                                                                        <button type="submit" class="btn">depose</button>
                                                                                     </form>
                                                                                 </td>
                                                                             </tr>
@@ -198,7 +198,7 @@
                                                                                         <td>
                                                                                             <form method="POST" action="/city/appoint/{{$city->id}}/{{$applicant->user_id}}" class="d-inline">
                                                                                                 @csrf
-                                                                                                <button type="submit" class="btn btn-primary">appoint</button>
+                                                                                                <button type="submit" class="btn">appoint</button>
                                                                                             </form>
                                                                                         </td>
                                                                                     </tr>
@@ -211,7 +211,7 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
                                                                 </div>
                                                             </div>
                                                         </div>

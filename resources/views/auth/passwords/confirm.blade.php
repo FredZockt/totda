@@ -28,7 +28,7 @@
 
                         <div class="row mb-0">
                             <div class="col-12 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn">
                                     {{ __('Confirm Password') }}
                                 </button>
 

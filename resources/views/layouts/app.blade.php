@@ -22,7 +22,8 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    <div id="app">
+    <div id="app" >
+
         <header>
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
@@ -116,10 +117,7 @@
                 </div>
             </nav>
         </header>
-
-        <img class="header-image mb-5" src="{{asset('assets/images/bg.png')}}" alt="Traveler">
-
-        <div style="position: absolute; width: 100%; top:48px;">
+        <div>
             <div class="container">
                 <div class="row">
                     <div class="col-8">
@@ -162,11 +160,26 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <img class="header-image mb-5" src="{{asset('assets/images/bg.png')}}" alt="Traveler">
+
                         </aside>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <footer class="bg-white shadow-sm">
+        <div class="container d-flex justify-content-between my-3">
+            <p>
+                Tomaten
+            </p>
+            <p>Ehrliches Geld für ehrliche Arbeit</p>
+            <p>
+                &copy; By FightsGames
+            </p>
+        </div>
+    </footer>
 </body>
 </html>
