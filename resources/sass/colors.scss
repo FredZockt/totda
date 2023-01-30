@@ -12,3 +12,30 @@
     --colors-light: #F9F6F2;
 
 }
+
+#app {
+    background: linear-gradient(to right, #FFF1CF, #F9F6F2);
+    background-size: 600%;
+    width: 100%;
+    animation: gradient 15s ease-in-out infinite;
+  }
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    19% {
+        background-position: 60% 20%;
+    }
+    40% {
+        background-position: 92% 13%;
+    }
+    60% {
+      background-position: 100% 0%;
+    }
+    83% {
+        background-position: 50% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }

@@ -34,19 +34,19 @@
                             <td>
                                 <form action="/work/{{ $building->id }}/start/1" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary">start</button>
+                                    <button type="submit" class="btn">start</button>
                                 </form>
                             </td>
                             <td>
                                 <form action="/work/{{ $building->id }}/start/2" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary">start</button>
+                                    <button type="submit" class="btn">start</button>
                                 </form>
                             </td>
                             <td>
                                 <form action="/work/{{ $building->id }}/start/3" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary">start</button>
+                                    <button type="submit" class="btn">start</button>
                                 </form>
                             </td>
                         </tr>

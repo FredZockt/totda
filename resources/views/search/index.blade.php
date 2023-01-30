@@ -18,7 +18,7 @@
                         <label for="search_term">Search for Traders:</label>
                         <input type="text" class="form-control" id="search_term" name="search_term" required placeholder="Search..." value="{{$search_term ? $search_term : ''}}">
                     </div>
-                    <input type="submit" value="Submit" class="btn btn-primary mt-4">
+                    <input type="submit" value="Submit" class="btn mt-4">
                 </form>
             </div>
         </div>

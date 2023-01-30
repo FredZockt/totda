@@ -30,7 +30,7 @@
                                             @csrf
                                             <div class="form-group">
                                                 <input type="number" step="0.01" class="w-25 form-control d-inline-block" id="rate" name="rate" min="0.01" max="5.00" required value="{{$city->tax_rate}}">
-                                                <button type="submit" class="btn btn-primary">save</button>
+                                                <button type="submit" class="btn">save</button>
                                             </div>
                                         </form>
                                     </td>
@@ -45,7 +45,7 @@
                                     <td>
                                         <form action="{{ route('city.abdicate') }}" method="POST">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">abdicate</button>
+                                            <button type="submit" class="btn">abdicate</button>
                                         </form>
                                     </td>
                                 @else
@@ -60,12 +60,12 @@
                                         @if($application && $city->id == $application->city_id)
                                             <form action="{{ route('city.apply.cancel') }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="btn btn-primary">withdraw</button>
+                                                <button type="submit" class="btn">withdraw</button>
                                             </form>
                                         @else
                                             <form action="{{ route('city.apply') }}" method="POST">
                                                 @csrf
-                                                <button {{ $user->gold < 500 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn btn-primary">apply</button>
+                                                <button {{ $user->gold < 500 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn">apply</button>
                                             </form>
                                         @endif
                                         <span>Application can send until {{ $vacancy->open_until }}</span>
@@ -87,7 +87,7 @@
                     @if($walkFlag)
                         <div class="alert alert-warning">You're still on the way</div>
                     @endif
-                    <table class="table">
+                    <table class="table align-middle">
                         <thead>
                         <tr>
                             <th>Building</th>
@@ -107,7 +107,7 @@
                                 <td>{{ $building->mid_job }}</td>
                                 <td>{{ $building->long_job }}</td>
                                 <td>
-                                    <a href="/work/{{ $building->id }}" class="btn btn-primary">visit</a>
+                                    <a href="/work/{{ $building->id }}" class="btn">visit</a>
                                 </td>
                             </tr>
                         @endforeach

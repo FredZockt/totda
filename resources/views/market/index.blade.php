@@ -36,7 +36,7 @@
                                 <td>{{ $good->max_stack }}</td>
                                 <td>
                                     <form>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sellModal{{$index}}">
+                                        <button type="button" class="btn" data-toggle="modal" data-target="#sellModal{{$index}}">
                                             Buy
                                         </button>
                                     </form>
@@ -45,7 +45,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel{{$index}}">Sell {{ $good->name }}</h5>
-                                                    <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -58,8 +58,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <input type="submit" value="Buy" class="btn btn-primary">
+                                                        <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                                        <input type="submit" value="Buy" class="btn">
                                                     </div>
                                                 </form>
                                             </div>

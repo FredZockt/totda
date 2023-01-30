@@ -26,7 +26,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel{{$index}}">{{ $city->name }}</h5>
-                                                <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -60,7 +60,7 @@
                                                 @if(!auth()->user()->job_id)
                                                     <form method="POST" action="/walk/{{$city->id}}">
                                                         @csrf
-                                                        <input type="submit" value="visit" class="btn btn-primary">
+                                                        <input type="submit" value="visit" class="btn">
                                                     </form>
                                                 @else
                                                     <div class="alert alert-info">You are currently working/walking</div>
