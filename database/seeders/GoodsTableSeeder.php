@@ -13,7 +13,7 @@ class GoodsTableSeeder extends Seeder
             ['name' => 'wheat', 'price' => 0.5, 'max_stack' => 100, 'quantity' => 0],
             ['name' => 'timber', 'price' => 1.5, 'max_stack' => 50, 'quantity' => 0],
             ['name' => 'wool', 'price' => 2, 'max_stack' => 100, 'quantity' => 0],
-            ['name' => 'iron ore', 'price' => 5, 'max_stack' => 50, 'quantity' => 0],
+            ['name' => 'iron_ore', 'price' => 5, 'max_stack' => 50, 'quantity' => 0],
             ['name' => 'leather', 'price' => 3, 'max_stack' => 100, 'quantity' => 0],
             ['name' => 'fish', 'price' => 2, 'max_stack' => 100, 'quantity' => 0],
             ['name' => 'salt', 'price' => 4, 'max_stack' => 50, 'quantity' => 0],

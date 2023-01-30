@@ -13,7 +13,7 @@
             display: block;
         }
     </style>
-    <div class="map">
+{{--    <div class="map">
         @for($x = 0; $x <= 100; $x++)
             <div class="map-row">
                 @for($y = 0; $y <= 100; $y++)
@@ -76,5 +76,21 @@
             </div>
 
         @endfor
+    </div>--}}
+
+    <div class="map mt-1">
+        @foreach($map as $indexX => $x)
+            <div class="map-row">
+                @foreach($x as $indexY => $y)
+                    <div data-value="{{$y['value']}}" data-x="{{$indexX}}" data-y="{{$indexY}}" style="width:8px;height:8px;background-color: {{$y['bg']}};float:left;">
+                        @foreach($cities as $index => $city)
+                            @if($city->x == $indexX && $city->y == $indexY)
+                                <span data-toggle="modal" data-target="#cityModal{{$index}}" data-x="{{$city->x}}" data-y="{{$city->y}}" style="cursor: pointer;display: block; height:8px; width: 8px; background-color: {{$city->kingdom_id == 1 ? 'red' : 'blue'}};"></span>
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        @endforeach
     </div>
 @endsection

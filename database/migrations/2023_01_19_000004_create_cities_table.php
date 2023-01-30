@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('x');
             $table->integer('y');
             $table->decimal('gold', 14, 6)->default(1000);
+            $table->json('resources')->nullable();
             $table->timestamps();
 
             $table->foreign('kingdom_id')->references('id')->on('kingdoms');
