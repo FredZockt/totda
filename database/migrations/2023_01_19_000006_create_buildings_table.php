@@ -19,12 +19,15 @@ return new class extends Migration
             $table->integer('short_job')->default(0);
             $table->integer('mid_job')->default(0);
             $table->integer('long_job')->default(0);
+            $table->integer('level')->default(1);
             $table->unsignedBigInteger('good_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('good_id')->references('id')->on('goods');
             $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Inventory;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,13 @@ class SidebarMiddleware
                 'sidebar_gold_content' => $user->gold,
                 'sidebar_inventory_headline' => 'Your inventory',
                 'sidebar_inventory_content' => $slots . ' / 32'
+            ]);
+        }
+
+        if(!$user->work_finished_at || $user->work_finished_at < Carbon::now()) {
+            session()->forget([
+                'active_job_headline',
+                'active_job_description'
             ]);
         }
 

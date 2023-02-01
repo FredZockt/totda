@@ -19,7 +19,7 @@ class Inventory extends Model
     //$user->id, $good->id, $amount, 'good', $good->max_stack
     public static function addItem($user_id, $good_id, $quantity, $type, $max_stack)
     {
-        $slots = Inventory::where('good_id', $good_id)->where('quantity', '<', $max_stack)->get();
+        $slots = Inventory::where('good_id', $good_id)->where('quantity', '<', $max_stack)->where('user_id', $user_id)->get();
         $totalSlots = Inventory::where('user_id', $user_id)->get()->count();
 
         // loop through the returned collection of slots
