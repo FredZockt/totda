@@ -26,6 +26,10 @@ class WorkController extends Controller
         $workFlag = !!$user->job_id;
         $walkFlag = false;
 
+        if($building->city_id != $city->id) {
+            return redirect('/city');
+        }
+
         if($user->job_id == 1) {
             $walkFlag = true;
         }

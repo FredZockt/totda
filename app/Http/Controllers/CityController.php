@@ -28,6 +28,11 @@ class CityController extends Controller
         $governor = $city->governor()->first();
         $application = DB::table('governor_application')->where('user_id', $user->id)->first();
         $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
+        $canBuild = false;
+
+        if($buildings->count() < $city->level * 5) {
+            $canBuild = true;
+        }
 
         if($vacancy) {
             if(Carbon::createFromTimeString($vacancy->open_until)->timestamp <=  Carbon::now()->timestamp) {
@@ -53,7 +58,8 @@ class CityController extends Controller
             'governor' => $governor,
             'user' => $user,
             'application' => $application,
-            'vacancy' => $vacancy
+            'vacancy' => $vacancy,
+            'canBuild' => $canBuild
         ]);
     }
 

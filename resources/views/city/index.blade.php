@@ -80,6 +80,16 @@
                     </table>
                 </div>
             </div>
+            @if($canBuild)
+            <div class="card mt-4">
+                <div class="card-header">
+                    You can build a building
+                </div>
+                <div class="card-body">
+                    <span>soon...</span>
+                </div>
+            </div>
+            @endif
             <div class="card mt-4">
                 <div class="card-header">Buildings to work in</div>
 
@@ -87,7 +97,8 @@
                     @if($walkFlag)
                         <div class="alert alert-warning">You're still on the way</div>
                     @endif
-                    <table class="table align-middle">
+                    <span>Buildings of {{$city->name}}</span>
+                    <table class="table align-middle table-striped table-hover">
                         <thead>
                         <tr>
                             <th>Building</th>
@@ -100,6 +111,7 @@
                         </thead>
                         <tbody>
                         @foreach($buildings as $building)
+                            @if($building->user_id == null)
                             <tr>
                                 <td>{{ $building->name }}</td>
                                 <td>{{ $building->good_name }}</td>
@@ -110,10 +122,42 @@
                                     <a href="/work/{{ $building->id }}" class="btn">visit</a>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
 
                         </tbody>
                     </table>
+                    <hr/>
+                        <span>Buildings of Traders</span>
+                        <table class="table align-middle table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Building</th>
+                                <th>Product</th>
+                                <th>Short</th>
+                                <th>Mid</th>
+                                <th>Long</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($buildings as $building)
+                                @if($building->user_id != null)
+                                    <tr>
+                                        <td>{{ $building->name }}</td>
+                                        <td>{{ $building->good_name }}</td>
+                                        <td>{{ $building->short_job }}</td>
+                                        <td>{{ $building->mid_job }}</td>
+                                        <td>{{ $building->long_job }}</td>
+                                        <td>
+                                            <a href="/work/{{ $building->id }}" class="btn">visit</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+
+                            </tbody>
+                        </table>
                 </div>
             </div>
         </div>
