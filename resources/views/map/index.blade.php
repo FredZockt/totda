@@ -109,7 +109,7 @@
                                                     <tr>
                                                         <td>{{ $city->kingdom }}</td>
                                                         @if(!auth()->user()->job_id)
-                                                            <td>{{ auth()->user()->current_city_id && $city->id == auth()->user()->current_city_id ? '-' : number_format($city->distanceToInKm, 2) }}</td>
+                                                            <td>{{ auth()->user()->current_city_id && $city->id == auth()->user()->current_city_id ? '-' : number_format($city->distanceToInKm, 2, ',', '.') }}</td>
                                                             <td>{{ $city->id == auth()->user()->current_city_id ? '-' : $city->distanceToAsReadable }}</td>
                                                             <td>{{ $city->id == auth()->user()->current_city_id ? '-' : $city->distanceToAsDate }}</td>
                                                         @else
