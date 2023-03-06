@@ -126,7 +126,7 @@
                         </main>
                     </div>
 
-                    <div class="col-4 flyout">
+                    <div class="col-8 col-sm-6 col-md-4 flyout">
                         <div class="flyout__wrapper__btn d-lg-none">
                             <button class="toggle"></button>
                         </div>
