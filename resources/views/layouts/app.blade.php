@@ -25,7 +25,7 @@
     <div id="app" >
 
         <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         TDA
@@ -117,53 +117,61 @@
                 </div>
             </nav>
         </header>
-        <div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-8">
+        <div class="app-wrapper flyout__wrapper">
+            <div class="container h-100">
+                <div class="row h-100">
+                    <div class="col-12 col-lg-8">
                         <main class="py-4">
                             @yield('content')
                         </main>
                     </div>
 
-                    <div class="col-4">
-                        <aside class="py-4">
-                            @if(session()->get('sidebar_city_headline') && session()->get('sidebar_city_content'))
-                                <div class="card mb-4">
-                                    <div class="card-header">{{ session()->get('sidebar_city_headline') }}</div>
-                                    <div class="card-body">
-                                        <p class="mb-0">{{ session()->get('sidebar_city_content') }}</p>
+                    <div class="col-4 flyout">
+                        <div class="flyout__wrapper__btn d-lg-none">
+                            <button class="toggle"></button>
+                        </div>
+                        <div class="flyout__wrapper__aside py-4">
+                            <aside class="">
+                                @if(session()->get('sidebar_city_headline') && session()->get('sidebar_city_content'))
+                                    <div class="card mb-4">
+                                        <div class="card-header">{{ session()->get('sidebar_city_headline') }}</div>
+                                        <div class="card-body">
+                                            <p class="mb-0">{{ session()->get('sidebar_city_content') }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
-                            @if(session()->get('sidebar_gold_headline') && session()->get('sidebar_gold_content'))
-                                <div class="card mb-4">
-                                    <div class="card-header">{{ session()->get('sidebar_gold_headline') }}</div>
-                                    <div class="card-body">
-                                        <p class="mb-0">{{ session()->get('sidebar_gold_content') }}</p>
+                                @endif
+                                @if(session()->get('sidebar_gold_headline') && session()->get('sidebar_gold_content'))
+                                    <div class="card mb-4">
+                                        <div class="card-header">{{ session()->get('sidebar_gold_headline') }}</div>
+                                        <div class="card-body">
+                                            <p class="mb-0">{{ session()->get('sidebar_gold_content') }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
-                            @if(session()->get('sidebar_inventory_headline') && session()->get('sidebar_inventory_content'))
-                                <div class="card mb-4">
-                                    <div class="card-header">{{ session()->get('sidebar_inventory_headline') }}</div>
-                                    <div class="card-body">
-                                        <p class="mb-0">{{ session()->get('sidebar_inventory_content') }}</p>
+                                @endif
+                                @if(session()->get('sidebar_inventory_headline') && session()->get('sidebar_inventory_content'))
+                                    <div class="card mb-4">
+                                        <div class="card-header">{{ session()->get('sidebar_inventory_headline') }}</div>
+                                        <div class="card-body">
+                                            <p class="mb-0">{{ session()->get('sidebar_inventory_content') }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
-                            @if(session()->get('active_job_headline') && session()->get('active_job_description'))
-                                <div class="card mb-4">
-                                    <div class="card-header">{{ session()->get('active_job_headline') }}</div>
-                                    <div class="card-body">
-                                        <p class="mb-0">{{ session()->get('active_job_description') }}</p>
+                                @endif
+                                @if(session()->get('active_job_headline') && session()->get('active_job_description'))
+                                    <div class="card mb-4">
+                                        <div class="card-header">{{ session()->get('active_job_headline') }}</div>
+                                        <div class="card-body">
+                                            <p class="mb-0">{{ session()->get('active_job_description') }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
+                                @endif
+                                @if(session()->get('sidebar_gold_headline') && session()->get('sidebar_gold_content'))
+                                    <img class="header-image mb-5" src="{{asset('assets/images/bg.png')}}" alt="Traveler">
+                                @endif
 
-                            <img class="header-image mb-5" src="{{asset('assets/images/bg.png')}}" alt="Traveler">
 
-                        </aside>
+                            </aside>
+                        </div>
+            
                     </div>
                 </div>
             </div>

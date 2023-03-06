@@ -30,7 +30,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body table-responsive">
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
@@ -95,7 +95,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body table-responsive">
                                                 <table class="table">
                                                     <thead>
                                                     <tr>

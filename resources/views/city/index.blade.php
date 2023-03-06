@@ -11,8 +11,8 @@
             <div class="card">
                 <div class="card-header">Welcome to {{ $city->name }}</div>
 
-                <div class="card-body">
-                    <table class="table">
+                <div class="card-body table-responsive">
+                    <table class="table align-middle">
                         <thead>
                         <tr>
                             <th>name</th>
@@ -56,7 +56,8 @@
                                     <td>-</td>
                                 @else
                                     @if($city->kingdom_id == $user->kingdom_id)
-                                    <td>
+                                    <td class="d-flex align-items-center justify-content-between">
+                                        <span>Application can send until {{ $vacancy->open_until }}</span>
                                         @if($application && $city->id == $application->city_id)
                                             <form action="{{ route('city.apply.cancel') }}" method="POST">
                                                 @csrf
@@ -68,7 +69,6 @@
                                                 <button {{ $user->gold < 500 || $application ? 'disabled=disabled' : '' }} type="submit" class="btn">apply</button>
                                             </form>
                                         @endif
-                                        <span>Application can send until {{ $vacancy->open_until }}</span>
                                     </td>
                                     @else
                                         <td>-</td>
@@ -126,7 +126,7 @@
             <div class="card mt-4">
                 <div class="card-header">Buildings to work in</div>
 
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     @if($walkFlag)
                         <div class="alert alert-warning">You're still on the way</div>
                     @endif
@@ -151,7 +151,7 @@
                                 <td>{{ $building->short_job }}</td>
                                 <td>{{ $building->mid_job }}</td>
                                 <td>{{ $building->long_job }}</td>
-                                <td>
+                                <td class="d-flex justify-content-end">
                                     <a href="/work/{{ $building->id }}" class="btn">visit</a>
                                 </td>
                             </tr>
