@@ -42,6 +42,7 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::post('/city/abdicate', [CityController::class, 'abdicate'])->name('city.abdicate');
     Route::post('/city/apply/cancel', [CityController::class, 'cancel'])->name('city.apply.cancel');
     Route::post('/city/apply/tax', [CityController::class, 'tax'])->name('city.apply.tax');
+    Route::post('/city/build', [CityController::class, 'build'])->name('city.build');
     Route::post('/city/depose/{city_id}', [CityController::class, 'depose'])->name('city.depose');
     Route::post('/city/appoint/{city_id}/{user_id}', [CityController::class, 'appoint'])->name('city.appoint');
 

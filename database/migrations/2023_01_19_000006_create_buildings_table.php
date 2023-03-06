@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('mid_job')->default(0);
             $table->integer('long_job')->default(0);
             $table->integer('level')->default(1);
+            $table->boolean('active')->default(false);
             $table->unsignedBigInteger('good_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

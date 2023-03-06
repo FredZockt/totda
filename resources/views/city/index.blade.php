@@ -80,13 +80,46 @@
                     </table>
                 </div>
             </div>
-            @if($canBuild)
+            @if($canBuild && count($potentialResourceBuildings) > 0)
             <div class="card mt-4">
                 <div class="card-header">
                     You can build a building
                 </div>
                 <div class="card-body">
-                    <span>soon...</span>
+                    <p>
+                        You can build one building per city, even in cities that do not belong to your kingdom.
+                        The building will cost 25.000 gold and will take 8 hours.
+                        Attention: You can lose your building if:
+                        <ul>
+                            <li>The city is conquered by the other kingdom</li>
+                            <li>You will be elected as governor (doesn't matter which city)</li>
+                            <li>You will be crowned as king</li>
+                        </ul>
+                    </p>
+                    <table class="table align-middle table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Building</th>
+                            <th>Product</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($potentialResourceBuildings as $resource)
+                            <tr>
+                                <td>{{ $resource->name . '_factory' }}</td>
+                                <td>{{ $resource->name }}</td>
+                                <td>
+                                    <form action="/city/build" method="post">
+                                        @csrf
+                                        <input type="hidden" name="resource_type" value="{{ $resource->id }}"/>
+                                        <button type="submit" class="btn">build</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
             @endif
@@ -110,7 +143,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($buildings as $building)
+                        @foreach($systemBuildings as $building)
                             @if($building->user_id == null)
                             <tr>
                                 <td>{{ $building->name }}</td>
@@ -128,36 +161,36 @@
                         </tbody>
                     </table>
                     <hr/>
-                        <span>Buildings of Traders</span>
-                        <table class="table align-middle table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th>Building</th>
-                                <th>Product</th>
-                                <th>Short</th>
-                                <th>Mid</th>
-                                <th>Long</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($buildings as $building)
-                                @if($building->user_id != null)
-                                    <tr>
-                                        <td>{{ $building->name }}</td>
-                                        <td>{{ $building->good_name }}</td>
-                                        <td>{{ $building->short_job }}</td>
-                                        <td>{{ $building->mid_job }}</td>
-                                        <td>{{ $building->long_job }}</td>
-                                        <td>
-                                            <a href="/work/{{ $building->id }}" class="btn">visit</a>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
+                    <span>Buildings of Traders</span>
+                    <table class="table align-middle table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Building</th>
+                            <th>Product</th>
+                            <th>Short</th>
+                            <th>Mid</th>
+                            <th>Long</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($userBuildings as $building)
+                            @if($building->user_id != null && $building->active)
+                                <tr>
+                                    <td>{{ $building->user->name }} {{ $building->name }}</td>
+                                    <td>{{ $building->good_name }}</td>
+                                    <td>{{ $building->short_job }}</td>
+                                    <td>{{ $building->mid_job }}</td>
+                                    <td>{{ $building->long_job }}</td>
+                                    <td>
+                                        <a href="/work/{{ $building->id }}" class="btn">visit</a>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

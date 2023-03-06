@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Building;
 use App\Models\City;
+use App\Models\Good;
+use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +21,11 @@ class CityController extends Controller
     {
         $user = auth()->user();
         $city = $user->currentCity()->first();
-        $buildings = Building::leftJoin('goods', 'goods.id', '=', 'buildings.good_id')->where('city_id', $city->id)->get([
+        $systemBuildings = Building::leftJoin('goods', 'goods.id', '=', 'buildings.good_id')->where('city_id', $city->id)->where('user_id', null)->get([
+            'goods.name as good_name',
+            'buildings.*'
+        ]);
+        $userBuildings = Building::leftJoin('goods', 'goods.id', '=', 'buildings.good_id')->where('city_id', $city->id)->where('user_id', '>', 0)->get([
             'goods.name as good_name',
             'buildings.*'
         ]);
@@ -27,11 +33,27 @@ class CityController extends Controller
         $walkFlag = false;
         $governor = $city->governor()->first();
         $application = DB::table('governor_application')->where('user_id', $user->id)->first();
+        $applicationK = DB::table('king_application')->where('user_id', $user->id)->first();
         $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
-        $canBuild = false;
+        $canBuild = true;
+        $potentialResourceBuildings = [];
 
-        if($buildings->count() < $city->level * 5) {
-            $canBuild = true;
+        if($userBuildings->count() < $city->level * 5 && $user->gold > 25000) {
+            if($city->governor()->first()) {
+                if($city->governor()->first()->id == $user->id) {
+                    $canBuild = false;
+                }
+            }
+            if($city->kingdom()->first()->king()->first()) {
+                if($city->kingdom()->first()->king()->first()->id == $user->id) {
+                    $canBuild = false;
+                }
+            }
+            if($applicationK || $application) {
+                $canBuild = false;
+            }
+        } else {
+            $canBuild = false;
         }
 
         if($vacancy) {
@@ -43,15 +65,27 @@ class CityController extends Controller
         if($user->job_id == 1) {
             $walkFlag = true;
         }
-
-        foreach($buildings as $building) {
+        foreach($systemBuildings as $building) {
             $building->short_job = $city->getReadableWalktime($building->short_job);
             $building->mid_job = $city->getReadableWalktime($building->mid_job);
             $building->long_job = $city->getReadableWalktime($building->long_job);
+
+            if($canBuild) {
+                $potentialResourceBuildings[] = Good::find($building->good_id);
+            }
         }
 
+        foreach($userBuildings as $index => $building) {
+            $userBuildings[$index]->user = $building->user()->first();
+            if($building->user_id == $user->id) {
+                $canBuild = false;
+            }
+        }
+
+
         return view('city.index', [
-            'buildings' => $buildings,
+            'systemBuildings' => $systemBuildings,
+            'userBuildings' => $userBuildings,
             'city' => $city,
             'workFlag' => $workFlag,
             'walkFlag' => $walkFlag,
@@ -59,7 +93,8 @@ class CityController extends Controller
             'user' => $user,
             'application' => $application,
             'vacancy' => $vacancy,
-            'canBuild' => $canBuild
+            'canBuild' => $canBuild,
+            'potentialResourceBuildings' => $potentialResourceBuildings
         ]);
     }
 
@@ -225,6 +260,116 @@ class CityController extends Controller
         return redirect()->back()->with([
             'status' => 'You have abdicated',
             'status_type' => 'success'
+        ]);
+    }
+
+    public function build(Request $request)
+    {
+        $user = auth()->user();
+        $city = $user->currentCity()->first();
+        $systemBuildings = Building::leftJoin('goods', 'goods.id', '=', 'buildings.good_id')->where('city_id', $city->id)->where('user_id', null)->get([
+            'goods.name as good_name',
+            'buildings.*'
+        ]);
+        $userBuildings = Building::leftJoin('goods', 'goods.id', '=', 'buildings.good_id')->where('city_id', $city->id)->where('user_id', '>', 0)->get([
+            'goods.name as good_name',
+            'buildings.*'
+        ]);
+        $workFlag = !!$user->job_id;
+        $walkFlag = false;
+        $governor = $city->governor()->first();
+        $application = DB::table('governor_application')->where('user_id', $user->id)->first();
+        $applicationK = DB::table('king_application')->where('user_id', $user->id)->first();
+        $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
+        $canBuild = true;
+        $potentialResourceBuildings = [];
+
+        if($userBuildings->count() < $city->level * 5 && $user->gold > 25000) {
+            if($city->governor()->first()) {
+                if($city->governor()->first()->id == $user->id) {
+                    $canBuild = false;
+                }
+            }
+            if($city->kingdom()->first()->king()->first()) {
+                if($city->kingdom()->first()->king()->first()->id == $user->id) {
+                    $canBuild = false;
+                }
+            }
+            if($applicationK || $application) {
+                $canBuild = false;
+            }
+        } else {
+            $canBuild = false;
+        }
+
+        if($vacancy) {
+            if(Carbon::createFromTimeString($vacancy->open_until)->timestamp <=  Carbon::now()->timestamp) {
+                $vacancy = null;
+            }
+        }
+
+        if($user->job_id == 1) {
+            $walkFlag = true;
+        }
+
+        foreach($systemBuildings as $building) {
+            $building->short_job = $city->getReadableWalktime($building->short_job);
+            $building->mid_job = $city->getReadableWalktime($building->mid_job);
+            $building->long_job = $city->getReadableWalktime($building->long_job);
+
+            if($canBuild) {
+                $potentialResourceBuildings[] = $building->good_id;
+            }
+        }
+
+        foreach($userBuildings as $building) {
+            if($building->user_id == $user->id) {
+                $canBuild = false;
+            }
+        }
+
+
+        $type = $request->input('resource_type');
+
+        if(is_numeric($type)) {
+            if($canBuild && !$walkFlag && !$workFlag && in_array((int)$type, $potentialResourceBuildings)) {
+                foreach($systemBuildings as $building) {
+                    if($building->good_id == (int)$type) {
+                        $build = new Building();
+                        $build->name = $building->good()->first()->name . '_factory';
+                        $build->good_id = (int)$type;
+                        $build->city_id = $city->id;
+                        $build->user_id = null;
+                        $build->active = false;
+                        $price = $building->good()->first()->price;
+                        $build->short_job = ceil((rand(300, 600) * (1 + $price/100)) / 300) * 300;
+                        $build->mid_job = ceil((rand(3600, 7200) * (1 + $price/100)) / 3600) * 3600;
+                        $build->long_job = ceil((rand(14400, 28800) * (1 + $price/100)) / 14400) * 14400;
+                        $build->user_id = $user->id;
+                        $build->save();
+
+                        for($i = 1; $i <= 3; $i++) {
+                            $job = new Job();
+                            $job->name = strtolower(str_replace(' ', '_', $building->city()->first()->name . '_' . $building->name . '_job'));
+                            $job->building_id = Building::where('city_id', $city->id)->where('user_id', $user->id)->first()->id;
+                            $job->task = $i;
+                            $job->save();
+                        }
+
+                        $user->gold -= 25000;
+                        $user->save();
+                    }
+                }
+                return redirect()->back()->with([
+                    'status' => 'construction started',
+                    'status_type' => 'success'
+                ]);
+            }
+        }
+
+        return redirect()->back()->with([
+            'status' => 'something went wrong...',
+            'status_type' => 'danger'
         ]);
     }
 

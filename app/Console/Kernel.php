@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('generate:voting_results')->everyMinute();
         $schedule->command('kingdom:pay_taxes')->everyMinute();
         $schedule->command('user:check_work')->everyMinute();
+        $schedule->command('building:check_build')->everyMinute();
     }
 
     /**

@@ -26,6 +26,10 @@ class WorkController extends Controller
         $workFlag = !!$user->job_id;
         $walkFlag = false;
 
+        if(!$building->active) {
+            return redirect('/city');
+        }
+
         if($building->city_id != $city->id) {
             return redirect('/city');
         }
@@ -53,7 +57,7 @@ class WorkController extends Controller
         $city = $user->currentCity()->first();
         $jobs = Job::where('building_id', $id)->get();
 
-        if($building->city_id != $city->id) {
+        if($building->city_id != $city->id || !$building->active) {
             return redirect('/city');
         }
 

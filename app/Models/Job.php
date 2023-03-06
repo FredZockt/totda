@@ -46,7 +46,7 @@ class Job extends Model
             };
 
             // determine owner
-            if($building->user_id != null && $building->user_id != 0) {
+            if($building->user_id != null && $building->user_id != 0 && $building->user_id != $user->id) {
                 $owner = $building->user()->first();
                 Inventory::addItem($user->id, $good->id, round($amount * 0.9), 'good', $good->max_stack);
                 Inventory::addItem($owner->id, $good->id, round($amount * 0.1), 'good', $good->max_stack);
