@@ -94,7 +94,7 @@ class MarketController extends Controller
         Inventory::addItem($user->id, $good->good_id, $quantity, 'good', $good->good()->first()->max_stack);
 
         return redirect()->back()->with([
-            'status' => 'Item bought successfully for: ' . (($price * $quantity) + $tax) . '! Tax: ' . $tax,
+            'status' => 'Item bought successfully for: ' . number_format(($price * $quantity) - $tax, 2, ',', '.') . '! Tax: ' . number_format($tax, 2, ',', '.'),
             'status_type' => 'success'
         ]);
     }

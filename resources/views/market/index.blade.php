@@ -30,9 +30,9 @@
                         @foreach($goods as $index => $good)
                             <tr>
                                 <td>{{ $good->name }}</td>
-                                <td>{{ $good->quantity }}</td>
-                                <td>{{ $good->price }}</td>
-                                <td>{{ $good->price + ($city->tax_rate * $good->price) }}</td>
+                                <td>{{ number_format($good->quantity, 0, ',', '.') }}</td>
+                                <td>{{ number_format($good->price, 2, ',', '.') }}</td>
+                                <td>{{ number_format($good->price + ($city->tax_rate * $good->price), 2, ',', '.') }}</td>
                                 <td>{{ $good->max_stack }}</td>
                                 <td>
                                     <form>

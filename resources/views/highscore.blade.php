@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $player->name }}</td>
-                    <td>{{ $player->gold }}</td>
+                    <td>{{ number_format($player->gold, '0', ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>

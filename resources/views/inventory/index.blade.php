@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6">Price: </div>
-                            <div class="col-6 text-end price text-{{ $item->price < $item->base_price * 0.8 ? 'warning' : ($item->price > $item->base_price * 1.19 ? 'success' : 'normal') }}">{{ round($item->price, 2) }}</div>
+                            <div class="col-6 text-end price text-{{ $item->price < $item->base_price * 0.8 ? 'warning' : ($item->price > $item->base_price * 1.19 ? 'success' : 'normal') }}">{{ number_format($item->price, 2, ',', '.') }}</div>
                         </div>
                         <button data-toggle="modal" data-target="#sellModal{{$index}}" class="btn w-100 mb-2">Sell</button>
                         <form action="{{ route('inventory.delete', $item->id) }}" method="POST" class="w-100">

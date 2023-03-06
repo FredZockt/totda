@@ -35,10 +35,10 @@
                                         </form>
                                     </td>
                                     @else
-                                    <td>{{ $city->tax_rate }}</td>
+                                    <td>{{ number_format($city->tax_rate, 2, ',', '.') }}</td>
                                 @endif
                                 @else
-                                <td>{{ $city->tax_rate }}</td>
+                                <td>{{ number_format($city->tax_rate, 2, ',', '.') }}</td>
                             @endif
                             @if($governor)
                                 @if($governor->id == $user->id)
@@ -166,6 +166,7 @@
                         <thead>
                         <tr>
                             <th>Building</th>
+                            <th>Level</th>
                             <th>Product</th>
                             <th>Short</th>
                             <th>Mid</th>
@@ -178,6 +179,7 @@
                             @if($building->user_id != null && $building->active)
                                 <tr>
                                     <td>{{ $building->user->name }} {{ $building->name }}</td>
+                                    <td>{{ $building->level }}</td>
                                     <td>{{ $building->good_name }}</td>
                                     <td>{{ $building->short_job }}</td>
                                     <td>{{ $building->mid_job }}</td>

@@ -76,6 +76,9 @@ class CityController extends Controller
         }
 
         foreach($userBuildings as $index => $building) {
+            $building->short_job = $city->getReadableWalktime($building->short_job);
+            $building->mid_job = $city->getReadableWalktime($building->mid_job);
+            $building->long_job = $city->getReadableWalktime($building->long_job);
             $userBuildings[$index]->user = $building->user()->first();
             if($building->user_id == $user->id) {
                 $canBuild = false;
