@@ -15,10 +15,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        /*
         $schedule->command('generate:highscore')->dailyAt('4:00');
         $schedule->command('generate:vacancies')->twiceDailyAt(0, 12);
         $schedule->command('generate:voting_results')->twiceDailyAt(0, 12);
         $schedule->command('kingdom:pay_taxes')->dailyAt('0:00');
+        $schedule->command('user:check_work')->everyTenMinutes();
+        */
+        // just for development
+        $schedule->command('generate:highscore')->everyMinute();
+        $schedule->command('generate:vacancies')->everyMinute();
+        $schedule->command('generate:voting_results')->everyMinute();
+        $schedule->command('kingdom:pay_taxes')->everyMinute();
+        $schedule->command('user:check_work')->everyMinute();
     }
 
     /**

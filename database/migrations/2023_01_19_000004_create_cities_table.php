@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('tax_rate_kingdom',4,2)->default(5.00);
             $table->integer('x');
             $table->integer('y');
+            $table->integer('level')->default(1);
             $table->decimal('gold', 14, 6)->default(1000);
             $table->json('resources')->nullable();
             $table->timestamps();
