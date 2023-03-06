@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="table-responsive">
-    <table>
+    <table class="highscore table table-striped">
         <thead>
             <tr>
                 <th>Rank</th>

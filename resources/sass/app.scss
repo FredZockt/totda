@@ -86,3 +86,25 @@ html, body {
     object-fit: cover;
 }
 
+// Highscore 
+
+.highscore {
+    tbody {
+        tr:first-child {
+            position: relative;
+            &:after {
+                content: "";
+                position: absolute;
+                background-image: url('http://127.0.0.1:8000/assets/images/svg/crown-solid.svg');
+                width: 25px;
+                height: 25px;
+                display: block;
+                z-index: 1;
+                top: 50%;
+                right: 1.5rem;
+                transform: translateY(-50%);
+            }
+        } 
+    }
+
+}
