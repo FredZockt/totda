@@ -111,7 +111,7 @@ class InventoryController extends Controller
         $good->handleSell($item->good_id, $kingdom->id, $quantity);
 
         return redirect()->back()->with([
-            'status' => 'Item sold successfully for: ' . ($price * $quantity) - $tax . '! Tax: ' . $tax,
+            'status' => 'Item sold successfully for: ' . number_format(($price * $quantity) - $tax, 2, ',', '.') . '! Tax: ' . number_format($tax, 2, ',', '.'),
             'status_type' => 'success'
         ]);
     }
