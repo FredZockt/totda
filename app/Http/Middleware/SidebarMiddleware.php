@@ -27,7 +27,7 @@ class SidebarMiddleware
                 'sidebar_city_headline' => 'Your current city',
                 'sidebar_city_content' => $city->name,
                 'sidebar_gold_headline' => 'Your current gold',
-                'sidebar_gold_content' => $user->gold,
+                'sidebar_gold_content' => number_format($user->gold, '0', ',', '.'),
                 'sidebar_inventory_headline' => 'Your inventory',
                 'sidebar_inventory_content' => $slots . ' / 32'
             ]);
@@ -38,7 +38,7 @@ class SidebarMiddleware
             ]);
             session()->put([
                 'sidebar_gold_headline' => 'Your current gold',
-                'sidebar_gold_content' => $user->gold,
+                'sidebar_gold_content' => number_format($user->gold, '0', ',', '.'),
                 'sidebar_inventory_headline' => 'Your inventory',
                 'sidebar_inventory_content' => $slots . ' / 32'
             ]);

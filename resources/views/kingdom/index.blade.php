@@ -23,7 +23,7 @@
                             <tbody>
                                 <tr>
                                     <td>{{ $kingdom->name }}</td>
-                                    <td>{{ $kingdom->gold }}</td>
+                                    <td>{{ number_format($kingdom->gold, '0', ',', '.') }}</td>
                                     @if($king)
                                         @if($king->id == $user->id)
                                             <td>
@@ -132,9 +132,9 @@
                                     <tr>
                                         <td>{{ ($index + 1) }}</td>
                                         <td>{{ $city->name }}</td>
-                                        <td>{{ $city->tax_rate }}</td>
+                                        <td>{{ number_format($city->tax_rate, 2, ',', '.') }}</td>
                                         @if(!auth()->user()->job_id)
-                                            <td>{{ auth()->user()->current_city_id && $city->id == auth()->user()->current_city_id ? '-' : number_format($city->distanceToInKm, 2) }}</td>
+                                            <td>{{ auth()->user()->current_city_id && $city->id == auth()->user()->current_city_id ? '-' : number_format($city->distanceToInKm, 2, ',', '.') }}</td>
                                             <td>{{ $city->id == auth()->user()->current_city_id ? '-' : $city->distanceToAsReadable }}</td>
                                             <td>{{ $city->id == auth()->user()->current_city_id ? '-' : $city->distanceToAsDate }}</td>
                                         @else
