@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header">Kingdom you belong to</div>
 
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -114,7 +114,7 @@
                 <div class="card">
                     <div class="card-header">Kingdom's cities</div>
 
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
@@ -159,7 +159,7 @@
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
-                                                                <div class="modal-body">
+                                                                <div class="modal-body table-responsive">
                                                                     @if($city->governor()->first())
                                                                         <table class="table">
                                                                             <thead>

@@ -6,6 +6,8 @@
         {{ session()->get('status') }}
     </div>
 @endif
+
+
 <div class="row">
     @for ($row = 0; $row < 4; $row++)
         @for ($col = 0; $col < 8; $col++)
@@ -14,13 +16,14 @@
                 $item = $slots[$index] ?? null;
             @endphp
             @if ($item)
-            <div class="col-auto">
+            <div class="col-auto spacing__col-bottom">
                 <div class="info-card">
 
-                    <img class="info-card__image mb-3" src="{{asset('assets/images/'.$item->good_name.'.png')}}" alt="{{ $item->good_name }}">
+                    <!-- <img class="info-card__image mb-3" src="{{asset('assets/images/'.$item->good_name.'.png')}}" alt="{{ $item->good_name }}"> -->
+                    <img class="info-card__image mb-3" src="https://via.placeholder.com/250x150" alt="{{ $item->good_name }}">
 
                     <div class="info-card__content">
-                        <h3>{{ $item->good_name }}</h3>
+                        <h2><b>{{ $item->good_name }}</b></h3>
 
                         <div class="row">
                             <div class="col-6">Quantity: </div>

@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header">Welcome to the {{$city->name}} market</div>
 
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     @if($walkFlag)
                         <div class="alert alert-warning">You're still on the way</div>
                     @endif

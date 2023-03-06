@@ -1,22 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<table>
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Gold</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($players as $index => $player)
+<div class="table-responsive">
+    <table>
+        <thead>
             <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $player->name }}</td>
-                <td>{{ $player->gold }}</td>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Gold</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach($players as $index => $player)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $player->name }}</td>
+                    <td>{{ $player->gold }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 @endsection
