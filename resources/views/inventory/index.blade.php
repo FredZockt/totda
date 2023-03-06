@@ -20,10 +20,10 @@
                 <div class="info-card">
 
                     <!-- <img class="info-card__image mb-3" src="{{asset('assets/images/'.$item->good_name.'.png')}}" alt="{{ $item->good_name }}"> -->
-                    <img class="info-card__image mb-3" src="https://via.placeholder.com/250x150" alt="{{ $item->good_name }}">
+                    <img class="info-card__image p-5" loading="lazy" src="{{ asset('assets/images/png/' . $item->good_name . '.png') }}" alt="{{ $item->good_name }}">
 
                     <div class="info-card__content">
-                        <h2><b>{{ $item->good_name }}</b></h3>
+                        <h2><b>{{ $item->good_name }}</b></h2>
 
                         <div class="row">
                             <div class="col-6">Quantity: </div>
