@@ -33,9 +33,6 @@ Route::get('/styleguide', function () {
 });
 
 Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
-    Route::get('/', function () {
-        return redirect('/city');
-    });
     Route::get('/city', [CityController::class, 'index'])->name('city.index');
     Route::post('/building/sell/{building_id}', [CityController::class, 'sellBuilding'])->name('building.sell');
     Route::post('/building/level/{building_id}', [CityController::class, 'levelUp'])->name('building.level');
@@ -83,3 +80,6 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::post('/market/buy/{id}', [MarketController::class, 'buy'])->name('market.buy');
 });
 
+Route::get('/{any}', function() {
+    return redirect('/');
+});
