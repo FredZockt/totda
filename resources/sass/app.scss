@@ -48,7 +48,8 @@ body {
     }
 }
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     // overflow: hidden;
@@ -86,6 +87,20 @@ html, body {
     object-fit: cover;
 }
 
+.mini-icon {
+    &__wrapper {
+        position: relative;
+        width: 32px;
+        display: inline-block;
+        padding-top: 32px;
+    }
+
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    object-fit: contain;
+}
+
 // inventory
 
 .info-card__image-wrapper {
@@ -109,6 +124,7 @@ html, body {
     tbody {
         tr:first-child {
             position: relative;
+
             &:after {
                 content: "";
                 position: absolute;
@@ -121,7 +137,33 @@ html, body {
                 right: 1.5rem;
                 transform: translateY(-50%);
             }
-        } 
+        }
     }
 
+}
+
+// map 
+
+.ressource-list {
+    list-style-type: none;
+    padding: 0;
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:nth-child(even) {
+            border-left: 1px solid #000;
+        }
+    }
+}
+
+
+// Market 
+
+.market {
+    td {
+        vertical-align: middle;
+    }
 }

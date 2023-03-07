@@ -56,7 +56,7 @@ class MapController extends Controller
                 $city->distanceToAsDate = Carbon::now()->addSeconds($city->distanceToInSeconds)->toDateTimeString();
             }
         }
-
+        
         return view('map.index', [
             "cities" => $cities,
             "map" => $map,

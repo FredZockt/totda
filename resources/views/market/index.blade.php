@@ -15,7 +15,7 @@
                     @if($walkFlag)
                         <div class="alert alert-warning">You're still on the way</div>
                     @endif
-                    <table class="table">
+                    <table class="table market">
                         <thead>
                         <tr>
                             <th>Product</th>
@@ -29,7 +29,15 @@
                         <tbody>
                         @foreach($goods as $index => $good)
                             <tr>
-                                <td>{{ $good->name }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                    <span class="mini-icon__wrapper me-3">
+                                        <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/'. $good->name .'.png') }}" alt="">
+                                    </span>
+                                    {{ $good->name }}
+                                    </div>
+                    
+                                </td>
                                 <td>{{ number_format($good->quantity, 0, ',', '.') }}</td>
                                 <td>{{ number_format($good->price, 2, ',', '.') }}</td>
                                 <td>{{ number_format($good->price + ($city->tax_rate * $good->price), 2, ',', '.') }}</td>
