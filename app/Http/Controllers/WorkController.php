@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auction;
 use App\Models\Building;
 use App\Models\Job;
 use Carbon\Carbon;
@@ -26,6 +27,8 @@ class WorkController extends Controller
         $workFlag = !!$user->job_id;
         $walkFlag = false;
 
+        $running_auction = Auction::where('building_id', $building->id)->first();
+
         if(!$building->active) {
             return redirect('/city');
         }
@@ -43,10 +46,12 @@ class WorkController extends Controller
         $building->long_job = $city->getReadableWalktime($building->long_job);
 
         return view('work.index', [
+            'user' => $user,
             'building' => $building,
             'city' => $city,
             'workFlag' => $workFlag,
-            'walkFlag' => $walkFlag
+            'walkFlag' => $walkFlag,
+            'running_auction' => $running_auction
         ]);
     }
 

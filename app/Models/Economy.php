@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Economy extends Model
 {
-    protected $table = 'economy';
+    protected $table = 'economies';
     protected $fillable = ['good_id', 'price', 'quantity'];
 
     public $base_price;
 
     // this method handles the sell of a user to economy
-    public function handleSell($good_id, $kingdom_id, $quantity)
+    public function handleSell($good_id, $city_id, $quantity)
     {
-        $goods = $this->where('good_id', $good_id)->where('kingdom_id', $kingdom_id)->first();
+        $goods = $this->where('good_id', $good_id)->where('city_id', $city_id)->first();
         $this->base_price = $goods->price;
 
         $goods->quantity += $quantity;
@@ -27,9 +27,9 @@ class Economy extends Model
     }
 
     // this method handles the buy of a user from economy
-    public function handleBuy($good_id, $kingdom_id, $quantity)
+    public function handleBuy($good_id, $city_id, $quantity)
     {
-        $goods = $this->where('good_id', $good_id)->where('kingdom_id', $kingdom_id)->first();
+        $goods = $this->where('good_id', $good_id)->where('city_id', $city_id)->first();
         $this->base_price = $goods->price;
 
         if($goods->quantity >= $quantity) {
@@ -42,5 +42,10 @@ class Economy extends Model
     public function good()
     {
         return $this->belongsTo(Good::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

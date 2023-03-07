@@ -38,7 +38,10 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/city', [CityController::class, 'index'])->name('city.index');
+    Route::post('/building/sell/{building_id}', [CityController::class, 'sellBuilding'])->name('building.sell');
+    Route::post('/building/level/{building_id}', [CityController::class, 'levelUp'])->name('building.level');
     Route::post('/city/apply', [CityController::class, 'apply'])->name('city.apply');
+    Route::post('/city/auction', [CityController::class, 'placeBid'])->name('city.auction');
     Route::post('/city/abdicate', [CityController::class, 'abdicate'])->name('city.abdicate');
     Route::post('/city/apply/cancel', [CityController::class, 'cancel'])->name('city.apply.cancel');
     Route::post('/city/apply/tax', [CityController::class, 'tax'])->name('city.apply.tax');

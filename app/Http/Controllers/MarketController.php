@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Building;
 use App\Models\Economy;
-use App\Models\Good;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 
@@ -19,7 +17,7 @@ class MarketController extends Controller
     {
         $user = auth()->user();
         $city = $user->currentCity()->first();
-        $goods = Economy::where('kingdom_id', $city->kingdom()->first()->id)->get();
+        $goods = Economy::where('city_id', $city->id)->get();
 
         $walkFlag = false;
 
@@ -46,8 +44,7 @@ class MarketController extends Controller
     {
         $user = auth()->user();
         $city = $user->currentCity()->first();
-        $kingdom = $city->kingdom()->first();
-        $good = Economy::where('id', $id)->where('kingdom_id', $kingdom->id)->first();
+        $good = Economy::where('id', $id)->where('city_id', $city->id)->first();
         $price = $good->price;
         $quantity = $request->input('quantity');
 
@@ -90,7 +87,7 @@ class MarketController extends Controller
         $city->save();
 
         // update economy
-        $good->handleBuy($good->good_id, $kingdom->id, $quantity);
+        $good->handleBuy($good->good_id, $city->id, $quantity);
         Inventory::addItem($user->id, $good->good_id, $quantity, 'good', $good->good()->first()->max_stack);
 
         return redirect()->back()->with([

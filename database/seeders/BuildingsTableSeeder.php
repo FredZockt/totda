@@ -24,7 +24,9 @@ class BuildingsTableSeeder extends Seeder
                             $building->good_id = $good->id;
                             $building->city_id = $city->id;
                             $building->user_id = null;
+                            $building->owner_id = null;
                             $building->active = true;
+                            $building->system = true;
                             $price = $good->price;
                             $building->short_job = ceil((rand(300, 600) * (1 + $price/100)) / 300) * 300;
                             $building->mid_job = ceil((rand(3600, 7200) * (1 + $price/100)) / 3600) * 3600;

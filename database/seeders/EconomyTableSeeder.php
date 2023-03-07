@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Economy;
 use App\Models\Good;
-use App\Models\Kingdom;
+use App\Models\City;
 use Illuminate\Database\Seeder;
 
 class EconomyTableSeeder extends Seeder
@@ -17,15 +17,15 @@ class EconomyTableSeeder extends Seeder
     public function run()
     {
         $goods = Good::all();
-        $kingdoms = Kingdom::all();
+        $cities = City::all();
 
-        foreach($kingdoms as $kingdom) {
+        foreach($cities as $city) {
             foreach ($goods as $good) {
                 $economy = new Economy();
                 $economy->good_id = $good->id;
-                $economy->kingdom_id = $kingdom->id;
+                $economy->city_id = $city->id;
                 $economy->price = $good->price;
-                $economy->quantity = rand(1000, 1500);
+                $economy->quantity = rand(333, 1337);
                 $economy->save();
             }
         }

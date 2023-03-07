@@ -21,14 +21,17 @@ return new class extends Migration
             $table->integer('long_job')->default(0);
             $table->integer('level')->default(1);
             $table->boolean('active')->default(false);
+            $table->boolean('system')->default(false);
             $table->unsignedBigInteger('good_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
+            $table->unsignedBigInteger('owner_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('good_id')->references('id')->on('goods');
             $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('owner_id')->references('id')->on('users');
         });
     }
 
