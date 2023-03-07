@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('economy', function (Blueprint $table) {
+        Schema::create('economies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('good_id');
-            $table->unsignedBigInteger('kingdom_id');
+            $table->unsignedBigInteger('city_id');
             $table->decimal('price', 14, 6)->default(0);
             $table->integer('quantity')->default(0);
             $table->timestamps();
 
             $table->foreign('good_id')->references('id')->on('goods');
-            $table->foreign('kingdom_id')->references('id')->on('kingdoms');
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('economy');
+        Schema::dropIfExists('economies');
     }
 };

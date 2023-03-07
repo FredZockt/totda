@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
 use App\Models\Economy;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
@@ -24,12 +23,12 @@ class InventoryController extends Controller
         // left join the slots table with the goods table
         $slots = DB::table('inventories')
             ->leftJoin('goods', 'inventories.good_id', '=', 'goods.id')
-            ->leftJoin('economy', function($join) use ($user) {
-                $join->on('economy.good_id', '=', 'goods.id')
-                    ->where('economy.kingdom_id', '=', $user->currentCity()->first()->kingdom_id);
+            ->leftJoin('economies', function($join) use ($user) {
+                $join->on('economies.good_id', '=', 'goods.id')
+                    ->where('economies.city_id', '=', $user->currentCity()->first()->id);
             })
             ->select('inventories.*', 'goods.name as good_name', 'goods.max_stack as max_stack',
-                DB::raw("IFNULL(economy.price, goods.price) as price"),
+                DB::raw("IFNULL(economies.price, goods.price) as price"),
                 DB::raw("goods.price as base_price"))
             ->where('user_id', $user->id)
             ->get();
@@ -87,9 +86,8 @@ class InventoryController extends Controller
 
         $user = Auth::user();
         $city = $user->currentCity()->first();
-        $kingdom = $city->kingdom()->first();
 
-        $good = Economy::where('good_id', $item->good_id)->where('kingdom_id', $kingdom->id)->first();
+        $good = Economy::where('good_id', $item->good_id)->where('city_id', $city->id)->first();
         $price = $good->price;
 
         $item->quantity -= $quantity;
@@ -108,7 +106,7 @@ class InventoryController extends Controller
         $city->save();
 
         // update economy
-        $good->handleSell($item->good_id, $kingdom->id, $quantity);
+        $good->handleSell($item->good_id, $city->id, $quantity);
 
         return redirect()->back()->with([
             'status' => 'Item sold successfully for: ' . number_format(($price * $quantity) - $tax, 2, ',', '.') . '! Tax: ' . number_format($tax, 2, ',', '.'),
