@@ -41,7 +41,7 @@ class Economy extends Model
 
     public function good()
     {
-        return $this->belongsTo(Good::class);
+        return $this->belongsTo(Good::class, 'good_id', 'id', 'goods');
     }
 
     public function city()
