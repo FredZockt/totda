@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Economy;
 use BlackScorp\SimplexNoise\Noise2D;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,6 +50,7 @@ class MapController extends Controller
 
         foreach($cities as $index => $city) {
             $city->kingdom = $city->kingdom()->first()->name;
+            $city->economies = Economy::where('city_id', $city->id)->get();
             if(!auth()->user()->job_id) {
                 $city->distanceToInKm = $city->calculateDistance(auth()->user()->current_city_id, $city->id);
                 $city->distanceToInSeconds = $city->calculateWalktime($city->distanceToInKm);
@@ -56,7 +58,7 @@ class MapController extends Controller
                 $city->distanceToAsDate = Carbon::now()->addSeconds($city->distanceToInSeconds)->toDateTimeString();
             }
         }
-        
+
         return view('map.index', [
             "cities" => $cities,
             "map" => $map,
