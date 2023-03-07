@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price', 14, 6)->default(0);
-            $table->integer('quantity')->default(0);
             $table->integer('max_stack')->default(0);
             $table->timestamps();
         });
