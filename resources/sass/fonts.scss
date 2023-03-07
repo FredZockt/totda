@@ -1,0 +1,51 @@
+@font-face {
+    font-family: "logo";
+    src: local("logo"),
+        url("http://localhost:8000/assets/fonts/logo.ttf");
+}
+
+@font-face {
+    font-family: "MedievalAlphabet";
+    src: local("MedievalAlphabet"),
+        url("http://localhost:8000/assets/fonts/MedievalAlphabet.ttf");
+}
+
+@font-face {
+    font-family: "PfefferMediaeval";
+    src: local("PfefferMediaeval"),
+        url("http://localhost:8000/assets/fonts/PfefferMediaeval.otf");
+}
+
+
+body {
+    font-family: 'PfefferMediaeval';
+}
+
+.art-font {
+    font-family: 'MedievalAlphabet';
+    font-size: larger;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand {
+    font-family: 'logo';
+}
+
+h1,
+.h1 {
+    font-size: 5rem;
+}
+
+h5,
+.h5 {
+    font-size: 1.9rem;
+}
+
+input {
+    font-size: 1.5rem !important;
+}

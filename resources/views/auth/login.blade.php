@@ -3,6 +3,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12">
+            <h1 class="my-4">Traders of the Dark Ages</h1>
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
