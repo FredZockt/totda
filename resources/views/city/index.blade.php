@@ -160,6 +160,7 @@
 
                         </tbody>
                     </table>
+                    @if($userBuildings->count() > 0)
                     <hr/>
                     <span>Buildings of Traders</span>
                     <table class="table align-middle table-striped table-hover">
@@ -193,6 +194,7 @@
 
                         </tbody>
                     </table>
+                    @endif
                 </div>
             </div>
         </div>
