@@ -85,7 +85,7 @@
                     <div data-value="{{$y['value']}}" data-x="{{$indexX}}" data-y="{{$indexY}}" style="width:8px;height:8px;background-color: {{$y['bg']}};float:left;">
                         @foreach($cities as $index => $city)
                             @if($city->x == $indexX && $city->y == $indexY)
-                                <span data-toggle="modal" data-target="#cityModal{{$index}}" data-x="{{$city->x}}" data-y="{{$city->y}}" style="cursor: pointer;display: block; height:8px; width: 8px; background-color: {{ $city->id == auth()->user()->current_city_id ? 'black' :  ($city->kingdom_id == 1 ? 'red' : 'blue') }};"></span>
+                                <span data-toggle="modal" data-target="#cityModal{{$index}}" data-x="{{$city->x}}" data-y="{{$city->y}}" style="cursor: pointer;display: block; height:8px; width: 8px; background-color: {{ $city->id == auth()->user()->current_city_id ? 'black' :  ($city->kingdom_id == 1 ? 'red' : 'blue') }};" class="{{$city->id == auth()->user()->current_city_id ? 'current-city' : ''}}"></span>
                                 <div class="modal fade" id="cityModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{$index}}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">

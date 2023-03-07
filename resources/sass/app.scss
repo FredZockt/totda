@@ -144,6 +144,10 @@ body {
 
 // map 
 
+.current-city {
+    animation: pulse 1.7s ease-in-out infinite;
+}
+
 .ressource-list {
     list-style-type: none;
     padding: 0;
