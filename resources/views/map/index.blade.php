@@ -130,7 +130,7 @@
                                                                         </span>
                                                                         {{ $eco->good->name }}
                                                                     </span>
-                                                                    <span class=" text-{{ $eco->price < $eco->good->price * 0.8 ? 'warning' : ($eco->price > $eco->good->price * 1.19 ? 'success' : 'normal') }}">
+                                                                    <span class=" text-{{ $eco->price < $eco->good->price * 0.8 ? 'warning' : ($eco->price > $eco->price * 1.19 ? 'success' : 'normal') }}">
                                                                     <span class="me-3 text-dark">
                                                                         {{ $eco->quantity }} pcs.
                                                                     </span>

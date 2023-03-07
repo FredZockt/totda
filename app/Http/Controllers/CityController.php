@@ -7,6 +7,8 @@ use App\Models\Building;
 use App\Models\City;
 use App\Models\Good;
 use App\Models\Job;
+use App\Models\Militia;
+use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +43,8 @@ class CityController extends Controller
         $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
         $canBuild = true;
         $potentialResourceBuildings = [];
+        $units = [];
+        $militias = [];
 
         if($userBuildings->count() < $city->level * 5 && $user->gold > 25000) {
             if($city->governor()->first()) {
@@ -92,6 +96,11 @@ class CityController extends Controller
             }
         }
 
+        if($city->governor_id == $user->id) {
+            $units = Unit::all();
+            $militias = Militia::where('city_id', $city->id)->get();
+        }
+
 
         if(count($userBuildingIds) > 0) {
             $auctions = Auction::leftJoin('buildings', 'buildings.id', 'auctions.building_id')
@@ -120,7 +129,9 @@ class CityController extends Controller
             'vacancy' => $vacancy,
             'canBuild' => $canBuild,
             'potentialResourceBuildings' => $potentialResourceBuildings,
-            'auctions' => $auctions
+            'auctions' => $auctions,
+            'units' => $units,
+            'militias' => $militias,
         ]);
     }
 
@@ -252,7 +263,7 @@ class CityController extends Controller
             ]);
         }
 
-        if($rate < 0.01 || $rate > 5.00) {
+        if($rate < 0.01 || $rate > 0.50) {
             return redirect()->back()->with([
                 'status' => 'Not allowed value',
                 'status_type' => 'danger'
@@ -303,7 +314,6 @@ class CityController extends Controller
         ]);
         $workFlag = !!$user->job_id;
         $walkFlag = false;
-        $governor = $city->governor()->first();
         $application = DB::table('governor_application')->where('user_id', $user->id)->first();
         $applicationK = DB::table('king_application')->where('user_id', $user->id)->first();
         $vacancy = DB::table('vacancies')->where('city_id', $city->id)->first();
@@ -569,5 +579,59 @@ class CityController extends Controller
                 'status_type' => 'danger'
             ]);
         }
+    }
+
+    public function hire(Request $request) {
+        $user = auth()->user()->first();
+        $city = $user->currentCity()->first();
+
+        if($city->governor_id != $user->id) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $validated = Validator::make($request->all(), [
+            'quantity' => 'required|integer',
+            'type' => 'required|integer'
+        ]);
+
+        if($validated->fails()) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $unit = Unit::where('id', $validated->getData()['type'])->first();
+        $amount = floor($validated->getData()['quantity']);
+
+        if(!$unit) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        if($unit->cost * $amount > $city->gold) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $troop = Militia::where('city_id', $city->id)->where('unit_id', $unit->id)->first();
+        $troop->amount += $amount;
+        $troop->save();
+
+        $city->gold -= $unit->cost * $amount;
+        $city->save();
+
+        return redirect()->back()->with([
+            'status' => 'You hired ' . $amount . ' of ' . $unit->name,
+            'status_type' => 'success'
+        ]);
+
     }
 }

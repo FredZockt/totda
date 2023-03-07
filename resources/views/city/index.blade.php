@@ -17,6 +17,7 @@
                         <tr>
                             <th>name</th>
                             <th>current tax rate</th>
+                            <th>current gold</th>
                             <th>governor</th>
                         </tr>
                         </thead>
@@ -29,7 +30,7 @@
                                         <form action="/city/apply/tax" method="POST">
                                             @csrf
                                             <div class="form-group">
-                                                <input type="number" step="0.01" class="w-25 form-control d-inline-block" id="rate" name="rate" min="0.01" max="5.00" required value="{{$city->tax_rate}}">
+                                                <input type="number" step="0.01" class="w-25 form-control d-inline-block" id="rate" name="rate" min="0.01" max="0.50" required value="{{$city->tax_rate}}">
                                                 <button type="submit" class="btn">save</button>
                                             </div>
                                         </form>
@@ -40,6 +41,7 @@
                                 @else
                                 <td>{{ number_format($city->tax_rate, 2, ',', '.') }}</td>
                             @endif
+                            <td>{{number_format($city->gold, 0, ',', '.')}}</td>
                             @if($governor)
                                 @if($governor->id == $user->id)
                                     <td>
@@ -80,6 +82,56 @@
                     </table>
                 </div>
             </div>
+            @if($city && $city->governor_id == $user->id)
+                <div class="card mt-4">
+                        <div class="card-header">Your Army</div>
+                        <div class="card-body">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Unit</th>
+                                    <th>Attack</th>
+                                    <th>Defense</th>
+                                    <th>Cost</th>
+                                    <th>Amount</th>
+                                    <th>Hire</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($units as $unit)
+                                    <tr>
+                                        <td>{{$unit->name}}</td>
+                                        <td>{{$unit->attack}}</td>
+                                        <td>{{$unit->defense}}</td>
+                                        <td>{{$unit->cost}}</td>
+                                        @foreach($militias as $militia)
+                                            @if($unit->id == $militia->unit_id)
+                                                <td>{{$militia->amount ? $militia->amount : 0}}</td>
+                                                <td>
+                                                    <form action="/city/hire" method="post">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group h-100">
+                                                                    <input type="hidden" name="type" value="{{ $unit->id }}">
+                                                                    <input type="number" class="form-control d-block h-100" id="quantity" name="quantity" min="1" max="{{ floor($city->gold / $unit->cost) }}" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button type="submit" class="btn d-block w-100">Hire</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            @endif
             @if($canBuild && count($potentialResourceBuildings) > 0)
             <div class="card mt-4">
                 <div class="card-header">

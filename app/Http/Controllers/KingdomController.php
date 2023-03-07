@@ -7,6 +7,7 @@ use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class KingdomController extends Controller
 {
@@ -187,5 +188,59 @@ class KingdomController extends Controller
             'status' => 'You have abdicated',
             'status_type' => 'success'
         ]);
+    }
+
+    public function hire(Request $request) {
+        $user = auth()->user()->first();
+        $kingdom = $user->kingdom()->first();
+
+        if($kingdom->king_id != $user->id) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $validated = Validator::make($request->all(), [
+            'quantity' => 'required|integer',
+            'type' => 'required|integer'
+        ]);
+
+        if($validated->fails()) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $unit = Unit::where('id', $validated->getData()['type'])->first();
+        $amount = floor($validated->getData()['quantity']);
+
+        if(!$unit) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        if($unit->cost * $amount > $kingdom->gold) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $troop = Troops::where('kingdom_id', $kingdom->id)->where('unit_id', $unit->id)->first();
+        $troop->amount += $amount;
+        $troop->save();
+
+        $kingdom->gold -= $unit->cost * $amount;
+        $kingdom->save();
+
+        return redirect()->back()->with([
+            'status' => 'You hired ' . $amount . ' of ' . $unit->name,
+            'status_type' => 'success'
+        ]);
+
     }
 }
