@@ -110,7 +110,58 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 pt-4">
+            @if($king && $king->id == $user->id)
+                <div class="col-12 mt-4">
+                    <div class="card">
+                        <div class="card-header">Your Army</div>
+                        <div class="card-body">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Unit</th>
+                                    <th>Attack</th>
+                                    <th>Defense</th>
+                                    <th>Cost</th>
+                                    <th>Amount</th>
+                                    <th>Hire</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($units as $unit)
+                                    <tr>
+                                        <td>{{$unit->name}}</td>
+                                        <td>{{$unit->attack}}</td>
+                                        <td>{{$unit->defense}}</td>
+                                        <td>{{$unit->cost}}</td>
+                                        @foreach($troops as $troop)
+                                            @if($unit->id == $troop->unit_id)
+                                                <td>{{$troop->amount ? $troop->amount : 0}}</td>
+                                                <td>
+                                                    <form action="" method="post">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group h-100">
+                                                                    <input type="number" class="form-control d-block h-100" id="quantity" name="quantity" min="1" max="{{$kingdom->gold / $unit->cost}}" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button type="submit" class="btn d-block w-100">Hire</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <div class="col-12 mt-4">
                 <div class="card">
                     <div class="card-header">Kingdom's cities</div>
 

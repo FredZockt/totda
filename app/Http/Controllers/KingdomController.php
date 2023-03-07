@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Troops;
+use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +29,8 @@ class KingdomController extends Controller
             ->select('king_application.*', 'users.*')
             ->get();
         $vacancy = DB::table('vacancies')->where('kingdom_id', $kingdom->id)->where('city_id', null)->first();
+        $units = [];
+        $troops = [];
 
         if($user->id == $kingdom->king_id) {
             foreach($cities as $city) {
@@ -35,6 +39,8 @@ class KingdomController extends Controller
                     ->where('city_id', $city->id)
                     ->get();
             }
+            $units = Unit::all();
+            $troops = Troops::where('kingdom_id', $kingdom->id)->get();
         }
 
         foreach($applicants as $applicant) {
@@ -64,7 +70,9 @@ class KingdomController extends Controller
             'application' => $application,
             'vacancy' => $vacancy,
             'applicants' => $applicants,
-            'governor_applicants' => $governor_applicants
+            'governor_applicants' => $governor_applicants,
+            'units' => $units,
+            'troops' => $troops,
         ]);
     }
 

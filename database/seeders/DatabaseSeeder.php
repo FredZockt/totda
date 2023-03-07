@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EconomyTableSeeder::class);
         $this->call(InventoryTableSeeder::class);
         $this->call(JobsTableSeeder::class);
+        $this->call(UnitSeeder::class);
+        $this->call(TroopSeeder::class);
+        $this->call(MilitiaSeeder::class);
     }
 }
