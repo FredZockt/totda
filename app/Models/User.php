@@ -48,6 +48,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function reservedGold()
+    {
+        $reserved = 0;
+        $auctions = self::auction()->get();
+
+        if($auctions->count() > 0) {
+            foreach($auctions as $auction) {
+                $reserved += $auction->bid;
+            }
+        }
+
+        return $reserved;
+    }
+
     public function kingdom()
     {
         return $this->belongsTo(Kingdom::class);
@@ -61,5 +75,10 @@ class User extends Authenticatable
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function auction()
+    {
+        return $this->hasMany(Auction::class, 'user_id', 'id');
     }
 }

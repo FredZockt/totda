@@ -92,8 +92,6 @@
                         Attention: You can lose your building if:
                         <ul>
                             <li>The city is conquered by the other kingdom</li>
-                            <li>You will be elected as governor (doesn't matter which city)</li>
-                            <li>You will be crowned as king</li>
                         </ul>
                     </p>
                     <table class="table align-middle table-striped table-hover">
@@ -177,17 +175,21 @@
                         </thead>
                         <tbody>
                         @foreach($userBuildings as $building)
-                            @if($building->user_id != null && $building->active)
+                            @if($building->user_id != null)
                                 <tr>
-                                    <td>{{ $building->user->name }} {{ $building->name }}</td>
+                                    <td>{{ $building->owner->name }} {{ $building->name }}</td>
                                     <td>{{ $building->level }}</td>
                                     <td>{{ $building->good_name }}</td>
+                                    @if($building->active)
                                     <td>{{ $building->short_job }}</td>
                                     <td>{{ $building->mid_job }}</td>
                                     <td>{{ $building->long_job }}</td>
                                     <td>
                                         <a href="/work/{{ $building->id }}" class="btn">visit</a>
                                     </td>
+                                    @else
+                                        <td colspan="4" class="text-center">not yet ready</td>
+                                    @endif
                                 </tr>
                             @endif
                         @endforeach
@@ -197,6 +199,67 @@
                     @endif
                 </div>
             </div>
+            @if(count($auctions) > 0)
+            <div class="card mt-4">
+                <div class="card-header">Auctions in {{ $city->name }}</div>
+                <div class="card-body">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Building</th>
+                            <th>Owner</th>
+                            <th>Product</th>
+                            <th>Highest bid</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($auctions as $index => $auction)
+                        <tr>
+                            <td>{{ $auction->building_name }}</td>
+                            <td>{{ $auction->owner_name }}</td>
+                            <td>{{ $auction->good_name }}</td>
+                            <td {{$auction->building_user_id != $user->id ? '' : 'colspan="2"'}}>{{ number_format($auction->bid, 0, ',', '.') }}</td>
+                            @if($auction->building_user_id != $user->id)
+                                <td>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#bidModal{{$index}}">
+                                        Place bid
+                                    </button>
+                                    <div class="modal fade" id="bidModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel{{$index}}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="bidModalLabel{{$index}}">Bid for {{ $auction->building_name }}</h5>
+                                                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="{{ route('city.auction') }}" method="POST">
+                                                    <div class="modal-body">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="bid">Bid</label>
+                                                            <input type="hidden" name="auction" value="{{$auction->id}}"/>
+                                                            <input type="number" class="form-control" id="bid" name="bid" value="{{$auction->bid + 500}}" min="{{$auction->bid + 500}}" max="{{ $user->gold }}" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn">Place bid</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            @endif
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 @endsection

@@ -35,11 +35,9 @@
                                 <td>{{ number_format($good->price + ($city->tax_rate * $good->price), 2, ',', '.') }}</td>
                                 <td>{{ $good->max_stack }}</td>
                                 <td>
-                                    <form>
-                                        <button type="button" class="btn" data-toggle="modal" data-target="#sellModal{{$index}}">
-                                            Buy
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#sellModal{{$index}}">
+                                        Buy
+                                    </button>
                                     <div class="modal fade" id="sellModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{$index}}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
