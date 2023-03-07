@@ -86,6 +86,23 @@ html, body {
     object-fit: cover;
 }
 
+// inventory
+
+.info-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+
+    img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+}
+
 // Highscore 
 
 .highscore {
