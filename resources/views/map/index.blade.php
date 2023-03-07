@@ -130,7 +130,12 @@
                                                                         </span>
                                                                         {{ $eco->good->name }}
                                                                     </span>
-                                                                    <span>{{ number_format($eco->price, 2, ',', '.') }}</span>
+                                                                    <span>
+                                                                    <span class="me-3">
+                                                                        {{ $eco->quantity }} pcs.
+                                                                    </span>
+                                                                        {{ number_format($eco->price, 2, ',', '.') }}
+                                                                    </span>
                                                                 </li>
                         
                                                              @endforeach
