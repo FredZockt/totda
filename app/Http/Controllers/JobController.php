@@ -19,7 +19,7 @@ class JobController extends Controller
         $current_city = $user->currentCity()->first();
 
         if($user->job_id) {
-            return redirect('/home')->with([
+            return redirect('/city')->with([
                 'status' => 'You are currently busy',
                 'status_type' => 'danger'
             ]);
