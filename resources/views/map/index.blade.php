@@ -121,114 +121,19 @@
                                                     <tr>
                                                         <td colspan="4">
                                                             <ul class="row ressource-list">
-                                                                <li class="col-6 ressource-list__item">
+                                                            @foreach($city->economies as $eco)
+                                                                
+                                                                <li class="col-6 ressource-list__item mb-3">
                                                                     <span class="d-flex align-items-center">
                                                                         <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
+                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/'. $eco->good->name .'.png') }}" alt="">
                                                                         </span>
-                                                                        item
+                                                                        {{ $eco->good->name }}
                                                                     </span>
-                                                                    <span>price</span>
+                                                                    <span>{{ number_format($eco->price, 2, ',', '.') }}</span>
                                                                 </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
-                                                                <li class="col-6 ressource-list__item">
-                                                                    <span class="d-flex align-items-center">
-                                                                        <span class="mini-icon__wrapper me-3">
-                                                                            <img class="mini-icon" loading="lazy" src="{{ asset('assets/images/png_mini/wool.png') }}" alt="">
-                                                                        </span>
-                                                                        item
-                                                                    </span>
-                                                                    <span>price</span>
-                                                                </li>
+                        
+                                                             @endforeach
                                                             </ul>
                                                         </td>
                                                     </tr>
