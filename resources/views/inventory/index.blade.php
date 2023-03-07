@@ -8,7 +8,7 @@
 @endif
 
 
-<div class="row">
+<div class="row justify-content-center justify-content-md-start">
     @for ($row = 0; $row < 4; $row++)
         @for ($col = 0; $col < 8; $col++)
             @php
@@ -16,11 +16,13 @@
                 $item = $slots[$index] ?? null;
             @endphp
             @if ($item)
-            <div class="col-auto spacing__col-bottom">
+            <div class="col-6 col-md-4 col-xl-3 spacing__col-bottom">
                 <div class="info-card">
 
+                    <div class="info-card__image-wrapper">
+                        <img class="info-card__image p-5" loading="lazy" src="{{ asset('assets/images/png/' . $item->good_name . '.png') }}" alt="{{ $item->good_name }}">
+                    </div>
                     <!-- <img class="info-card__image mb-3" src="{{asset('assets/images/'.$item->good_name.'.png')}}" alt="{{ $item->good_name }}"> -->
-                    <img class="info-card__image p-5" loading="lazy" src="{{ asset('assets/images/png/' . $item->good_name . '.png') }}" alt="{{ $item->good_name }}">
 
                     <div class="info-card__content">
                         <h2><b>{{ $item->good_name }}</b></h2>
