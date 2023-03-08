@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    {{ $building->owner ? $building->owner->name : '' }} {{ $building->name }} {{ $building->owner ? '(Level: ' . $building->level . ')' : '' }}
+@stop
+@section('description')
+    Start your work in {{ $building->owner ? $building->owner->name : '' }} {{ $building->name }} {{ $building->owner ? '(Level: ' . $building->level . ')' : '' }} and gather resources for trading.
+@stop
 @section('content')
     @if (session()->has('status'))
         <div class="alert alert-{{ session()->get('status_type') }}">

@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Highscore
+@stop
+@section('description')
+    View the current highscores. Those are determined by the amount of gold a trader have.
+@stop
 @section('content')
 <div class="table-responsive">
     <table class="highscore table table-striped">

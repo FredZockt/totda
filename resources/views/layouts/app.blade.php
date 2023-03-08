@@ -7,7 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- SEO -->
+    <title>Traders of the Dark Ages {{ Constants::META_SEPARATOR }} @yield('title')</title>
+    <meta name="description" content="@yield('description')">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

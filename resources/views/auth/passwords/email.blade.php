@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    New password
+@stop
+@section('description')
+    Request an email for password reset for Traders of the Dark Ages.
+@stop
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12">

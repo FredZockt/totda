@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    {{ $kingdom->name }}
+@stop
+@section('description')
+    This is {{ $kingdom->name }}. Have a look around.
+@stop
 @section('content')
     @if (session()->has('status'))
         <div class="alert alert-{{ session()->get('status_type') }}">

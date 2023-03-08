@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    {{ $city->name }}
+@stop
+@section('description')
+    Overview of {{ $city->name }}. Have a look around.
+@stop
 @section('content')
     @if (session()->has('status'))
         <div class="alert alert-{{ session()->get('status_type') }}">

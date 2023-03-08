@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Map
+@stop
+@section('description')
+    The world of Traders of the Dark Ages.
+@stop
 @section('content')
     @if (session()->has('status'))
         <div class="alert alert-{{ session()->get('status_type') }}">

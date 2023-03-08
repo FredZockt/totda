@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Inventory
+@stop
+@section('description')
+    Your Inventory representation. You can sell or dump items here.
+@stop
 @section('content')
 @if (session()->has('status'))
     <div class="alert alert-{{ session()->get('status_type') }}">
@@ -57,8 +62,8 @@
                                     <div class="modal-body">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="quantity">Quantity</label>
-                                        <input type="number" class="form-control" id="quantity" name="quantity" min="1" max="{{ $item->quantity }}" required>
+                                        <label for="quantity{{ $index }}">Quantity</label>
+                                        <input type="number" class="form-control" id="quantity{{ $index }}" name="quantity" min="1" max="{{ $item->quantity }}" required>
                                     </div>
                                     </div>
                                     <div class="modal-footer">

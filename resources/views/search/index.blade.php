@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Search
+@stop
+@section('description')
+    You lost something? Maybe you can find it here.
+@stop
 @section('content')
 @if (session()->has('status'))
     <div class="alert alert-{{ session()->get('status_type') }}">

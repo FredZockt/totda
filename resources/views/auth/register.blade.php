@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Registration
+@stop
+@section('description')
+    Register now for Traders of the Dark Ages and become a mighty trader.
+@stop
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12">

@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Market of {{ $city->name }}
+@stop
+@section('description')
+    Here you can buy items from {{ $city->name }}. BEst of luck and always good prices!
+@stop
 @section('content')
     @if (session()->has('status'))
         <div class="alert alert-{{ session()->get('status_type') }}">

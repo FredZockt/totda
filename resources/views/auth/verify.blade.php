@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+    Email verification
+@stop
+@section('description')
+    Traders of the Dark Ages requires a valid email that belongs to you. Here you can verify it.
+@stop
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12">
