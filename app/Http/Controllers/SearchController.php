@@ -21,10 +21,10 @@ class SearchController extends Controller
     }
 
     public function search(Request $request) {
-        $validatedData = $request->validate([
+        $validator = $request->validate([
             'search_term' => 'required|min:3|max:255|string|alpha_num',
         ]);
-        $search_term = $validatedData['search_term'];
+        $search_term = $validator['search_term'];
         $results = User::where('name', 'like', '%' . $search_term . '%')->get();
 
         return redirect()->back()->with([

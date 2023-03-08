@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class InventoryController extends Controller
 {
@@ -53,6 +54,10 @@ class InventoryController extends Controller
 
     public function sell(Request $request, $id)
     {
+        $validated = Validator::make($request->all(), [
+            'quantity' => 'required|integer'
+        ]);
+
         // is user walking?
         if(auth()->user()->job_id && auth()->user()->job_id == 1) {
             return redirect()->back()->with([
@@ -76,7 +81,7 @@ class InventoryController extends Controller
             ]);
         }
 
-        $quantity = $request->input('quantity');
+        $quantity = $validated->getData()['quantity'];
         if ($quantity > $item->quantity) {
             return redirect()->back()->with([
                 'status' => 'You do not have enough quantity of this item to sell',

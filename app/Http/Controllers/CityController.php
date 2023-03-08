@@ -253,6 +253,17 @@ class CityController extends Controller
 
     public function tax(Request $request)
     {
+        $validated = Validator::make($request->all(), [
+            'rate' => 'required|numeric|between:' . Constants::CITY_MIN_TAX_RATE.','.Constants::CITY_MAX_TAX_RATE
+        ]);
+
+        if($validated->fails()) {
+            return redirect()->back()->with([
+                'status' => 'This rate is disallowed.',
+                'status_type' => 'danger'
+            ]);
+        }
+
         $rate = $request->input('rate');
         $user = auth()->user()->first();
         $city = $user->currentCity()->first();
@@ -264,7 +275,7 @@ class CityController extends Controller
             ]);
         }
 
-        if($rate < 0.01 || $rate > 0.50) {
+        if($rate < Constants::CITY_MIN_TAX_RATE || $rate > Constants::CITY_MAX_TAX_RATE) {
             return redirect()->back()->with([
                 'status' => 'Not allowed value',
                 'status_type' => 'danger'
@@ -365,6 +376,17 @@ class CityController extends Controller
             }
         }
 
+
+        $validator = Validator::make($request->all(), [
+            'resource_type' => 'required|numeric'
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->back()->with([
+                'status' => 'something went wrong...',
+                'status_type' => 'danger'
+            ]);
+        }
 
         $type = $request->input('resource_type');
 
@@ -593,20 +615,20 @@ class CityController extends Controller
             ]);
         }
 
-        $validated = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'quantity' => 'required|integer',
             'type' => 'required|integer'
         ]);
 
-        if($validated->fails()) {
+        if($validator->fails()) {
             return redirect()->back()->with([
                 'status' => 'something went wrong',
                 'status_type' => 'danger'
             ]);
         }
 
-        $unit = Unit::where('id', $validated->getData()['type'])->first();
-        $amount = floor($validated->getData()['quantity']);
+        $unit = Unit::where('id', $validator->getData()['type'])->first();
+        $amount = floor($validator->getData()['quantity']);
 
         if(!$unit) {
             return redirect()->back()->with([

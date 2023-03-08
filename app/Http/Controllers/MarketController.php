@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Economy;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MarketController extends Controller
 {
@@ -46,7 +47,19 @@ class MarketController extends Controller
         $city = $user->currentCity()->first();
         $good = Economy::where('id', $id)->where('city_id', $city->id)->first();
         $price = $good->price;
-        $quantity = $request->input('quantity');
+
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required|integer'
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->back()->with([
+                'status' => 'Something went wrong, please try again',
+                'status_type' => 'danger'
+            ]);
+        }
+
+        $quantity = $validator->getData()['quantity'];
 
         if($good->quantity < $quantity) {
             return redirect()->back()->with([

@@ -73,6 +73,10 @@
                                         <button type="submit" class="btn">Level Up</button>
                                     </form>
                                 </div>
+                                    @else
+                                    <div class="col">
+                                        <span>Level up requires: {{ number_format($building->level * Constants::BASIC_BUILDING_COST, 0, ',', '.') }}</span>
+                                    </div>
                                 @endif
                                 @if(!$running_auction)
                                 <div class="col text-end">
