@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Constants as Constants;
 use App\Models\Auction;
 use App\Models\Building;
 use App\Models\City;
@@ -46,7 +47,7 @@ class CityController extends Controller
         $units = [];
         $militias = [];
 
-        if($userBuildings->count() < $city->level * 5 && $user->gold > 25000) {
+        if($userBuildings->count() < $city->level * Constants::BUILDING_SLOTS_PER_LEVEL && $user->gold > Constants::BASIC_BUILDING_COST) {
             if($city->governor()->first()) {
                 if($city->governor()->first()->id == $user->id) {
                     $canBuild = false;
@@ -156,13 +157,13 @@ class CityController extends Controller
             ]);
         }
 
-        if($user->gold > 500) {
+        if($user->gold > Constants::GOVERNOR_APPLICATION_FEE) {
             // user has to pay a fee
-            $user->gold -= 500;
+            $user->gold -= Constants::GOVERNOR_APPLICATION_FEE;
             $user->save();
 
             // kingdom gets the fee
-            $kingdom->gold += 500;
+            $kingdom->gold += Constants::GOVERNOR_APPLICATION_FEE;
             $kingdom->save();
 
             // save applicant
@@ -175,7 +176,7 @@ class CityController extends Controller
 
         } else {
             return redirect()->back()->with([
-                'status' => 'You need 500 gold to apply',
+                'status' => 'You need '. Constants::GOVERNOR_APPLICATION_FEE .' gold to apply',
                 'status_type' => 'danger'
             ]);
         }
@@ -320,7 +321,7 @@ class CityController extends Controller
         $canBuild = true;
         $potentialResourceBuildings = [];
 
-        if($userBuildings->count() < $city->level * 5 && $user->gold > 25000) {
+        if($userBuildings->count() < $city->level * Constants::BUILDING_SLOTS_PER_LEVEL && $user->gold > Constants::BASIC_BUILDING_COST) {
             if($city->governor()->first()) {
                 if($city->governor()->first()->id == $user->id) {
                     $canBuild = false;
@@ -392,7 +393,7 @@ class CityController extends Controller
                             $job->save();
                         }
 
-                        $user->gold -= 25000;
+                        $user->gold -= Constants::BASIC_BUILDING_COST;
                         $user->save();
                     }
                 }
@@ -560,8 +561,8 @@ class CityController extends Controller
             ]);
         }
 
-        if($user->gold >= $building->level * 25000) {
-            $user->gold -= $building->level * 25000;
+        if($user->gold >= $building->level * Constants::BASIC_BUILDING_COST) {
+            $user->gold -= $building->level * Constants::BASIC_BUILDING_COST;
             $user->save();
 
             $building->created_at = Carbon::now();

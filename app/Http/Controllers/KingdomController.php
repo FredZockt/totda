@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Constants;
 use App\Models\Troops;
 use App\Models\Unit;
 use Carbon\Carbon;
@@ -90,13 +91,13 @@ class KingdomController extends Controller
             ]);
         }
 
-        if($user->gold > 5000) {
+        if($user->gold > Constants::KINGS_APPLICATION_FEE) {
             // user has to pay a fee
-            $user->gold -= 5000;
+            $user->gold -= Constants::KINGS_APPLICATION_FEE;
             $user->save();
 
             // kingdom gets the fee
-            $kingdom->gold += 5000;
+            $kingdom->gold += Constants::KINGS_APPLICATION_FEE;
             $kingdom->save();
 
             // save applicant
@@ -109,7 +110,7 @@ class KingdomController extends Controller
 
         } else {
             return redirect()->back()->with([
-                'status' => 'You need 5000 gold to apply',
+                'status' => 'You need '.Constants::KINGS_APPLICATION_FEE.' gold to apply',
                 'status_type' => 'danger'
             ]);
         }

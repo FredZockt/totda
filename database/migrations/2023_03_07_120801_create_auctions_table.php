@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('building_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('initiator_id')->nullable();
-            $table->integer('bid')->default(25000);
+            $table->integer('bid')->default(Constants::BASIC_BUILDING_COST);
             $table->timestamps();
 
             $table->foreign('building_id')->references('id')->on('buildings');

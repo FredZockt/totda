@@ -66,7 +66,7 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row">
-                                @if($user->gold >= $building->level * 25000)
+                                @if($user->gold >= $building->level * Constants::BASIC_BUILDING_COST)
                                 <div class="col">
                                     <form action="/building/level/{{$building->id}}" method="post">
                                         @csrf

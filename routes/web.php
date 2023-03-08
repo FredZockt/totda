@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController as HomeController;
+use App\Http\Controllers\SettingsController as SettingsController;
 use App\Http\Controllers\KingdomController as KingdomController;
 use App\Http\Controllers\HighscoreController as HighscoreController;
 use App\Http\Controllers\InventoryController as InventoryController;
@@ -58,7 +58,7 @@ Route::middleware(['auth', 'job', 'sidebar'])->group(function () {
     Route::get('work/{id}', [WorkController::class, 'index'])->name('work.index');
     Route::post('work/{id}/start/{task}', [WorkController::class, 'start'])->name('work.start');
 
-    Route::get('/settings', [HomeController::class, 'index'])->name('home');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('inventory/sell/{id}', [InventoryController::class, 'sell'])->name('inventory.sell');
