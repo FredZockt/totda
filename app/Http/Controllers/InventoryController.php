@@ -54,8 +54,8 @@ class InventoryController extends Controller
 
     public function sell(Request $request, $id)
     {
-        $validated = Validator::make($request->all(), [
-            'quantity' => 'required|integer'
+        $validator = Validator::make($request->all(), [
+            'quantity'.session()->get('session_hash') => 'required|integer'
         ]);
 
         // is user walking?
@@ -81,7 +81,7 @@ class InventoryController extends Controller
             ]);
         }
 
-        $quantity = $validated->getData()['quantity'];
+        $quantity = $validator->getData()['quantity'. session()->get('session_hash')];
         if ($quantity > $item->quantity) {
             return redirect()->back()->with([
                 'status' => 'You do not have enough quantity of this item to sell',

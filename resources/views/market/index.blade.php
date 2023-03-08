@@ -64,8 +64,8 @@
                                                     <div class="modal-body">
                                                         @csrf
                                                         <div class="form-group">
-                                                            <label for="quantity">Quantity</label>
-                                                            <input type="number" class="form-control" id="quantity" name="quantity" min="1" max="{{ $available_gold > ($good->price + ($city->tax_rate * $good->price)) * $good->max_stack ? $good->max_stack : ceil($available_gold / ($good->price + ($city->tax_rate * $good->price))) }}" required>
+                                                            <label for="quantity{{ session()->get('session_hash') }}">Quantity</label>
+                                                            <input type="number" class="form-control" id="quantity{{ session()->get('session_hash') }}" name="quantity{{ session()->get('session_hash') }}" min="1" max="{{ $available_gold > ($good->price + ($city->tax_rate * $good->price)) * $good->max_stack ? $good->max_stack : ceil($available_gold / ($good->price + ($city->tax_rate * $good->price))) }}" required>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">

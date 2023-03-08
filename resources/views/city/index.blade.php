@@ -35,7 +35,7 @@
                                         <form action="/city/apply/tax" method="POST">
                                             @csrf
                                             <div class="form-group">
-                                                <input type="number" step="0.01" class="w-25 form-control d-inline-block" id="rate" name="rate" min="0.01" max="0.50" required value="{{$city->tax_rate}}">
+                                                <input type="number" step="0.01" class="w-25 form-control d-inline-block" id="rate{{ session()->get('session_hash') }}" name="rate{{ session()->get('session_hash') }}" min="0.01" max="0.50" required value="{{$city->tax_rate}}">
                                                 <button type="submit" class="btn">save</button>
                                             </div>
                                         </form>
@@ -118,8 +118,8 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="form-group h-100">
-                                                                    <input type="hidden" name="type" value="{{ $unit->id }}">
-                                                                    <input type="number" class="form-control d-block h-100" id="quantity" name="quantity" min="1" max="{{ floor($city->gold / $unit->cost) }}" required>
+                                                                    <input type="hidden" name="type{{ session()->get('session_hash') }}" value="{{ $unit->id }}">
+                                                                    <input type="number" class="form-control d-block h-100" id="quantity{{ session()->get('session_hash') }}" name="quantity{{ session()->get('session_hash') }}" min="1" max="{{ floor($city->gold / $unit->cost) }}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
@@ -167,7 +167,7 @@
                                 <td>
                                     <form action="/city/build" method="post">
                                         @csrf
-                                        <input type="hidden" name="resource_type" value="{{ $resource->id }}"/>
+                                        <input type="hidden" name="resource_type{{ session()->get('session_hash') }}" value="{{ $resource->id }}"/>
                                         <button type="submit" class="btn">build</button>
                                     </form>
                                 </td>
@@ -296,8 +296,8 @@
                                                         @csrf
                                                         <div class="form-group">
                                                             <label for="bid">Bid</label>
-                                                            <input type="hidden" name="auction" value="{{$auction->id}}"/>
-                                                            <input type="number" class="form-control" id="bid" name="bid" value="{{$auction->bid + 500}}" min="{{$auction->bid + 500}}" max="{{ $user->gold }}" required>
+                                                            <input type="hidden" name="auction{{ session()->get('session_hash') }}" value="{{$auction->id}}"/>
+                                                            <input type="number" class="form-control" id="bid{{ session()->get('session_hash') }}" name="bid{{ session()->get('session_hash') }}" value="{{$auction->bid + 500}}" min="{{$auction->bid + 500}}" max="{{ $user->gold }}" required>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">

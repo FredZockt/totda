@@ -202,20 +202,20 @@ class KingdomController extends Controller
             ]);
         }
 
-        $validated = Validator::make($request->all(), [
-            'quantity' => 'required|integer',
-            'type' => 'required|integer'
+        $validator = Validator::make($request->all(), [
+            'quantity'.session()->get('session_hash') => 'required|integer',
+            'type'.session()->get('session_hash') => 'required|integer'
         ]);
 
-        if($validated->fails()) {
+        if($validator->fails()) {
             return redirect()->back()->with([
                 'status' => 'something went wrong',
                 'status_type' => 'danger'
             ]);
         }
 
-        $unit = Unit::where('id', $validated->getData()['type'])->first();
-        $amount = floor($validated->getData()['quantity']);
+        $unit = Unit::where('id', $validator->getData()['type'. session()->get('session_hash')])->first();
+        $amount = floor($validator->getData()['quantity'. session()->get('session_hash')]);
 
         if(!$unit) {
             return redirect()->back()->with([

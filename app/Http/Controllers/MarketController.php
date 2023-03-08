@@ -49,7 +49,7 @@ class MarketController extends Controller
         $price = $good->price;
 
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required|integer'
+            'quantity'.session()->get('session_hash') => 'required|integer'
         ]);
 
         if($validator->fails()) {
@@ -59,7 +59,7 @@ class MarketController extends Controller
             ]);
         }
 
-        $quantity = $validator->getData()['quantity'];
+        $quantity = $validator->getData()['quantity'. session()->get('session_hash')];
 
         if($good->quantity < $quantity) {
             return redirect()->back()->with([

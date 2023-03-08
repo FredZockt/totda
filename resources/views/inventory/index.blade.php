@@ -62,8 +62,8 @@
                                     <div class="modal-body">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="quantity{{ $index }}">Quantity</label>
-                                        <input type="number" class="form-control" id="quantity{{ $index }}" name="quantity" min="1" max="{{ $item->quantity }}" required>
+                                        <label for="quantity{{ $index }}{{ session()->get('session_hash') }}">Quantity</label>
+                                        <input type="number" class="form-control" id="quantity{{ $index }}{{ session()->get('session_hash') }}" name="quantity{{ session()->get('session_hash') }}" min="1" max="{{ $item->quantity }}" required>
                                     </div>
                                     </div>
                                     <div class="modal-footer">

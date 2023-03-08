@@ -253,18 +253,18 @@ class CityController extends Controller
 
     public function tax(Request $request)
     {
-        $validated = Validator::make($request->all(), [
-            'rate' => 'required|numeric|between:' . Constants::CITY_MIN_TAX_RATE.','.Constants::CITY_MAX_TAX_RATE
+        $validator = Validator::make($request->all(), [
+            'rate'.session()->get('session_hash') => 'required|numeric|between:' . Constants::CITY_MIN_TAX_RATE.','.Constants::CITY_MAX_TAX_RATE
         ]);
 
-        if($validated->fails()) {
+        if($validator->fails()) {
             return redirect()->back()->with([
                 'status' => 'This rate is disallowed.',
                 'status_type' => 'danger'
             ]);
         }
 
-        $rate = $request->input('rate');
+        $rate = $validator->getData()['rate'.session()->get('session_hash')];
         $user = auth()->user()->first();
         $city = $user->currentCity()->first();
 
@@ -378,7 +378,7 @@ class CityController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'resource_type' => 'required|numeric'
+            'resource_type'.session()->get('session_hash') => 'required|numeric'
         ]);
 
         if($validator->fails()) {
@@ -388,7 +388,7 @@ class CityController extends Controller
             ]);
         }
 
-        $type = $request->input('resource_type');
+        $type = $validator->getData()['resource_type'. session()->get('session_hash')];
 
         if(is_numeric($type)) {
             if($canBuild && !$walkFlag && !$workFlag && in_array((int)$type, $potentialResourceBuildings)) {
@@ -477,8 +477,8 @@ class CityController extends Controller
 
         // must be numeric
         $validator = Validator::make($request->all(), [
-            'auction' => 'required|integer',
-            'bid' => 'required|integer'
+            'auction'.session()->get('session_hash') => 'required|integer',
+            'bid'.session()->get('session_hash') => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -490,8 +490,8 @@ class CityController extends Controller
 
         $reserved_gold = $user->reservedGold();
 
-        $auction = Auction::find($validator->getData()['auction']);
-        $bid = $validator->getData()['bid'];
+        $auction = Auction::find($validator->getData()['auction'. session()->get('session_hash')]);
+        $bid = $validator->getData()['bid'. session()->get('session_hash')];
 
         // must be higher by 500 as current bid
         if($auction->bid + 500 > $bid) {
@@ -616,8 +616,8 @@ class CityController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required|integer',
-            'type' => 'required|integer'
+            'quantity' . session()->get('session_hash') => 'required|integer',
+            'type' . session()->get('session_hash') => 'required|integer'
         ]);
 
         if($validator->fails()) {
@@ -627,8 +627,8 @@ class CityController extends Controller
             ]);
         }
 
-        $unit = Unit::where('id', $validator->getData()['type'])->first();
-        $amount = floor($validator->getData()['quantity']);
+        $unit = Unit::where('id', $validator->getData()['type' . session()->get('session_hash')])->first();
+        $amount = floor($validator->getData()['quantity' . session()->get('session_hash')]);
 
         if(!$unit) {
             return redirect()->back()->with([

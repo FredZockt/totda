@@ -20,8 +20,8 @@
                 <form action="/search/do" method="post">
                     @csrf
                     <div class="form-group">
-                        <label for="search_term">Search for Traders:</label>
-                        <input type="text" class="form-control" id="search_term" name="search_term" required placeholder="Search..." value="{{$search_term ? $search_term : ''}}">
+                        <label for="search_term{{ session()->get('session_hash') }}">Search for Traders:</label>
+                        <input type="text" class="form-control" id="search_term{{ session()->get('session_hash') }}" name="search_term{{ session()->get('session_hash') }}" required placeholder="Search..." value="{{$search_term ? $search_term : ''}}">
                     </div>
                     <input type="submit" value="Submit" class="btn mt-4">
                 </form>

@@ -22,9 +22,9 @@ class SearchController extends Controller
 
     public function search(Request $request) {
         $validator = $request->validate([
-            'search_term' => 'required|min:3|max:255|string|alpha_num',
+            'search_term'.session()->get('session_hash') => 'required|min:3|max:255|string|alpha_num',
         ]);
-        $search_term = $validator['search_term'];
+        $search_term = $validator['search_term'. session()->get('session_hash')];
         $results = User::where('name', 'like', '%' . $search_term . '%')->get();
 
         return redirect()->back()->with([

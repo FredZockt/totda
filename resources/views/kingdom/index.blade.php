@@ -147,8 +147,8 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="form-group h-100">
-                                                                    <input type="hidden" name="type" value="{{ $unit->id }}">
-                                                                    <input type="number" class="form-control d-block h-100" id="quantity" name="quantity" min="1" max="{{ floor($kingdom->gold / $unit->cost) }}" required>
+                                                                    <input type="hidden" name="type{{ session()->get('session_hash') }}" value="{{ $unit->id }}">
+                                                                    <input type="number" class="form-control d-block h-100" id="quantity{{ session()->get('session_hash') }}" name="quantity{{ session()->get('session_hash') }}" min="1" max="{{ floor($kingdom->gold / $unit->cost) }}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
