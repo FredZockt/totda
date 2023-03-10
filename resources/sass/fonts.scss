@@ -16,9 +16,18 @@
         url("http://localhost:8000/assets/fonts/PfefferMediaeval.otf");
 }
 
+@font-face {
+    font-family: "1529_champ_fleury";
+    src: local("1529 Champ Fleury W01 Regular"),
+    url("http://localhost:8000/assets/fonts/1529_champ_fleury_w01_regular/8b878294d7b9b47db6f27dc88b189731.eot"),
+    url("http://localhost:8000/assets/fonts/1529_champ_fleury_w01_regular/8b878294d7b9b47db6f27dc88b189731.svg"),
+    url("http://localhost:8000/assets/fonts/1529_champ_fleury_w01_regular/8b878294d7b9b47db6f27dc88b189731.ttf"),
+    url("http://localhost:8000/assets/fonts/1529_champ_fleury_w01_regular/8b878294d7b9b47db6f27dc88b189731.woff"),
+    url("http://localhost:8000/assets/fonts/1529_champ_fleury_w01_regular/8b878294d7b9b47db6f27dc88b189731.woff2");
+}
 
 body {
-    font-family: 'PfefferMediaeval';
+    font-family: '1529_champ_fleury';
 }
 
 .art-font {

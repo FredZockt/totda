@@ -58,56 +58,57 @@
                                     </li>
                                 @endif
 
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="/city">City</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/market">Market</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/inventory">Inventory</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/map">Map</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/work">Work</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/kingdom">Kingdom</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/settings">Settings</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/highscore">Highscore</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/search">Search</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                            @else
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="/city">City</a>
+                                </li>
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="/market">Market</a>
+                                </li>
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="/inventory">Inventory</a>
+                                </li>
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="/map">Map</a>
+                                </li>
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="/work">Work</a>
+                                </li>
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="/kingdom">Kingdom</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/settings">Settings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/highscore">Highscore</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/search">Search</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }}
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
+                                           onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </div>
                                     </div>
                                 </li>
                             @endguest
@@ -120,6 +121,48 @@
             <div class="container h-100">
                 <div class="row h-100">
                     <div class="col-12 col-lg-8">
+                        @auth()
+                        <section class="mt-4 d-none d-lg-block card ingame-menu">
+                            <div class="row">
+                                <div class="col-2">
+                                    <a href="/city" class="{{ request()->is('city*') ? 'active' : '' }}">
+                                        <img src="{{ asset('assets/images/ui/city.png')  }}" />
+                                        <span>City</span>
+                                    </a>
+                                </div>
+                                <div class="col-2">
+                                    <a href="/market" class="{{ request()->is('market*') ? 'active' : '' }}">
+                                        <img src="{{ asset('assets/images/ui/market.png')  }}" />
+                                        <span>Market</span>
+                                    </a>
+                                </div>
+                                <div class="col-2">
+                                    <a href="/inventory" class="{{ request()->is('inventory*') ? 'active' : '' }}">
+                                        <img src="{{ asset('assets/images/ui/inventory.png')  }}" />
+                                        <span>Inventory</span>
+                                    </a>
+                                </div>
+                                <div class="col-2">
+                                    <a href="/map" class="{{ request()->is('map*') ? 'active' : '' }}">
+                                        <img src="{{ asset('assets/images/ui/map.png')  }}" />
+                                        <span>Map</span>
+                                    </a>
+                                </div>
+                                <div class="col-2" class="{{ request()->is('work*') ? 'active' : '' }}">
+                                    <a href="/work">
+                                        <img src="{{ asset('assets/images/ui/work.png')  }}" />
+                                        <span>Work</span>
+                                    </a>
+                                </div>
+                                <div class="col-2">
+                                    <a href="/kingdom" class="{{ request()->is('kingdom*') ? 'active' : '' }}">
+                                        <img src="{{ asset('assets/images/ui/kingdom.png')  }}" />
+                                        <span>Kingdom</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                        @endauth
                         <main class="py-4">
                             @yield('content')
                         </main>

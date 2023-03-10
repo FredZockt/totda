@@ -1,0 +1,23 @@
+.ingame-menu {
+    background: rgb(33,136,150);
+    background: radial-gradient(circle, rgba(33,136,150,1) 0%, rgba(22,116,129,1) 64%, rgba(0,95,108,1) 92%);
+    a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        &.active {
+            span {
+                color: lightcoral;
+            }
+        }
+        span {
+            color: yellow;
+        }
+        &:hover {
+            span {
+                color: lightsalmon;
+            }
+        }
+    }
+}
